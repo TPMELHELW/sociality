@@ -1,159 +1,139 @@
-import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:sociality/controller/logincontroller.dart';
+// // main.dart
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'dart:async';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:sociality/controller/logincontroller.dart';
 
-class Test extends StatefulWidget {
-  const Test({Key? key}) : super(key: key);
+// class Test extends StatefulWidget {
+//   const Test({Key? key}) : super(key: key);
 
-  @override
-  State<Test> createState() => _TestState();
-}
+//   @override
+//   _TestState createState() => _TestState();
+// }
 
-class _TestState extends State<Test> {
-  // final _baseUrl = 'https://jsonplaceholder.typicode.com/posts';
+// class _TestState extends State<Test> {
+//   LogInController controller = Get.find();
+//   // The page number for pagination
+//   int _page = 0;
 
-  int _page = 0;
-  LogInController controller = Get.put(LogInController());
-  // final int _limit = 20;
+//   // The limit for each page
+//   int _limit = 10;
 
-  bool _isFirstLoadRunning = false;
-  bool _hasNextPage = true;
+//   // The total number of pages
+//   // int _totalPages = 0;
 
-  bool _isLoadMoreRunning = false;
+//   // The controller for scrolling
+//   ScrollController _scrollController = ScrollController();
 
-  List _posts = [];
+//   // The list of posts
+//   List _posts = [];
 
- void _loadMore() async {
-  if (_hasNextPage == true &&
-      _isFirstLoadRunning == false &&
-      _isLoadMoreRunning == false &&
-      _controller.position.extentAfter < 300) {
-    setState(() {
-      _isLoadMoreRunning = true; // Display a progress indicator at the bottom
-    });
+//   // The future for fetching posts
+//   Future _fetchPosts() async {
+//     // he API endpoint for fetching posts
+//     String url = "https://social-medai-mern-b696.vercel.app/posts?page=$_page";
 
-    _page += 1; // Increase _page by 1
+//     // Send a GET request to the API
+//     var response = await http.get(Uri.parse(url), headers: {
+//       'Authorization': 'Bearer ${controller.inf[0]['accessToken']}',
+//     });
+//     // print("$response *---*-*-*-*-*---*");
+//     // Get the total number of pages from the response headers
+//     // _totalPages =
+//     //     (int.parse(response.headers['x-total-count']!) ).ceil();
 
-    try {
-      final res = await http.get(
-          Uri.parse("https://social-medai-mern-b696.vercel.app/posts?page=$_page"),
-          headers: {
-            'Authorization': 'Bearer ${controller.inf[0]['accessToken']}',
-          });
+//     // Decode the response body as JSON
+//     var data = jsonDecode(response.body);
+//     // print(data); // Convert the JSON data to a list of posts
+//     // List<Post> posts = data.map<Post>((post) => Post.fromJson(post)).toList();
+//     // print(posts);
+//     // Return the list of posts
+//     return data['posts'];
+//   }
 
-      var fetchedPosts = json.decode(res.body);
-      print(fetchedPosts);
-      if (fetchedPosts.isNotEmpty) {
-        setState(() {
-          _posts.addAll(fetchedPosts['posts']); // Append the fetched posts to the existing list
-        });
-      } else {
-        setState(() {
-          _hasNextPage = false;
-        });
-      }
-    } catch (err) {
-      if (kDebugMode) {
-        print('Something went wrong!');
-      }
-      print(err);
-    }
+//   @override
+//   void initState() {
+//     super.initState();
 
-    setState(() {
-      _isLoadMoreRunning = false;
-    });
-  }
-}
+//     // Add a listener to the scroll controller
+//     _scrollController.addListener(() {
+//       // Check if the user has reached the end of the list
+//       if (_scrollController.position.pixels ==
+//           _scrollController.position.maxScrollExtent) {
+//         // Check if there are more pages to load
+//         if (_page < _totalPages) {
+//           // Increment the page number and call setState to trigger a rebuild
+//           setState(() {
+//             _page++;
+//           });
+//         }
+//       }
+//     });
+//   }
 
-  void _firstLoad() async {
-    setState(() {
-      _isFirstLoadRunning = true;
-    });
+//   @override
+//   void dispose() {
+//     // Dispose the scroll controller
+//     _scrollController.dispose();
+//     super.dispose();
+//   }
 
-    try {
-      final res = await http.get(
-          Uri.parse(
-              "https://social-medai-mern-b696.vercel.app/posts?page=$_page"),
-          headers: {
-            'Authorization': 'Bearer ${controller.inf[0]['accessToken']}',
-          });
-      setState(() {
-        var respncebody = json.decode(res.body);
-        _posts.add(respncebody);
-      });
-    } catch (err) {
-      if (kDebugMode) {
-        print('Something went wrong');
-      }
-      print(err);
-    }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Kindacode.com'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: FutureBuilder(
+//           future: _fetchPosts(),
+//           builder: (context, snapshot) {
+//             if (snapshot.hasData) {
+//               // print(snapshot.data);
+//               // Append the new posts to the existing list
+//               _posts.addAll(snapshot.data!);
 
-    setState(() {
-      _isFirstLoadRunning = false;
-    });
-  }
+//               return ListView.builder(
+//                 controller: _scrollController,
+//                 itemCount: _posts.length + (_page < _totalPages ? 1 : 0),
+//                 itemBuilder: (context, index) {
+//                   if (index == _posts.length) {
+//                     // Show a loading indicator at the end of the list
+//                     return const Center(
+//                       child: CircularProgressIndicator(),
+//                     );
+//                   } else {
+//                     // Show a post card for each post
+//                     return Card(
+//                       child: ListTile(
+//                         leading: CircleAvatar(
+//                           child: Text('${_posts[index]['userId']['firstName']}'),
+//                         ),
+//                         // title: Text(_posts[index].title),
+//                         // subtitle: Text(_posts[index].body),
+//                       ),
+//                     );
+//                   }
+//                 },
+//               );
+//             } else if (snapshot.hasError) {
+//               // Show an error message if something goes wrong
+//               return Center(
+//                 child: Text(snapshot.error.toString()),
+//               );
+//             } else {
+//               // Show a loading indicator while waiting for the data
+//               return const Center(
+//                 child: CircularProgressIndicator(),
+//               );
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-  late ScrollController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _firstLoad();
-    _controller = ScrollController()..addListener(_loadMore);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Your news',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: _isFirstLoadRunning
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _posts[0]['posts'].length,
-                      controller: _controller,
-                      itemBuilder: (context, index) => Card(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 10),
-                        child: Container(
-                          height: 500,
-                          child: ListTile(
-                            title: Text(
-                                _posts[0]['posts'][index]['userId']['firstName']),
-                            subtitle: Text(
-                                _posts[0]['posts'][index]['userId']['firstName']),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (_isLoadMoreRunning == true)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 40),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  if (_hasNextPage == false)
-                    Container(
-                      padding: const EdgeInsets.only(top: 30, bottom: 40),
-                      color: Colors.amber,
-                      child: const Center(
-                        child: Text('You have fetched all of the content'),
-                      ),
-                    ),
-                ],
-              ));
-  }
-}

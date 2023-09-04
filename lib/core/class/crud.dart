@@ -33,6 +33,28 @@ class Crud {
       return Left(StatusRequest.serverFailure);
     }
   }
+  Future<Either<StatusRequest, Map>> postRequestHeaders(uri, body,header) async {
+    try {
+      if (await checkInternet()) {
+        var responce = await http.post(Uri.parse(uri), body: body,headers: header);
+        if (responce.statusCode == 201 || responce.statusCode == 200) {
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
+        } else {
+          var responcebodyerror = await jsonDecode(responce.body);
+          return Right(responcebodyerror);
+        }
+      } else {
+        print('2');
+        return Left(StatusRequest.offline);
+      }
+    } catch (e) {
+      // print('3');
+      print('22');
+      print(e);
+      return Left(StatusRequest.serverFailure);
+    }
+  }
 
   Future<Either<StatusRequest, Map>> getRequest(uri,token) async {
     try {

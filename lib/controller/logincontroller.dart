@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/logindata.dart';
-import 'package:sociality/test.dart';
+import 'package:sociality/middleware/middleware.dart';
+
 import 'package:sociality/view/screen/homescreen.dart';
-import 'package:sociality/view/screen/test1.dart';
 
 class LogInController extends GetxController {
   late TextEditingController email;
@@ -17,6 +17,7 @@ class LogInController extends GetxController {
   late StatusRequest statusRequest;
   List<dynamic> inf = [];
 
+  MyServices myservices = Get.find();
   logIn() async {
     try {
       var formData = formstate.currentState!;
@@ -26,12 +27,11 @@ class LogInController extends GetxController {
         var responce = await data.getData(email.text, password.text);
         statusRequest = handlingData(responce);
         if (statusRequest == StatusRequest.success) {
-          // print('6');
           if (responce['user'] != null) {
-            // print('5');
             inf.add(responce);
-            // print(inf);
-            Get.offAll(() => HomeScreen());
+
+            // print(inf[0]['user']['_id']);
+            Get.off(() => HomeScreen());
           } else {
             Get.defaultDialog(
               title: 'ALERT',

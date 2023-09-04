@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/binding/binding.dart';
+import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/test.dart';
-
 import 'view/screen/auth/login.dart';
-import 'view/screen/homescreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initial();
   runApp(MyApp());
 }
 

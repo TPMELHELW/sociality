@@ -1,12 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sociality/core/model/menuitem.dart';
+import 'package:sociality/core/model/menuitems.dart';
 
 class Posts extends StatelessWidget {
-  final String text, body;
-  const Posts({super.key, required this.text, required this.body});
+  final String text,
+      body,
+      image,
+      profileImage,
+      heart,
+      comment,
+      time,
+      id,
+      currentId;
+  final bool isImage;
+  const Posts(
+      {super.key,
+      required this.text,
+      required this.body,
+      required this.image,
+      required this.isImage,
+      required this.profileImage,
+      required this.heart,
+      required this.comment,
+      required this.time,
+      required this.id,
+      required this.currentId});
 
   @override
   Widget build(BuildContext context) {
+    String backendTimeString = time;
+    DateTime backendTime = DateTime.parse(backendTimeString);
+    String formattedTime = DateFormat.yMMMMd().add_jms().format(backendTime);
+
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
@@ -22,11 +49,14 @@ class Posts extends StatelessWidget {
           Row(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Expanded(
+              Expanded(
                 flex: 1,
                 child: CircleAvatar(
                   backgroundColor: Color(0xFF757575),
                   maxRadius: 25,
+                  backgroundImage: NetworkImage(profileImage),
+                  onBackgroundImageError: (exception, stackTrace) =>
+                      print('gfdsdf'),
                   // minRadius: 30,
                 ),
               ),
@@ -42,17 +72,18 @@ class Posts extends StatelessWidget {
                               color: Colors.white,
                               fontWeight: FontWeight.bold)),
                       Text(
-                        '24 hours ago',
+                        '$formattedTime',
                         style: TextStyle(color: Colors.white),
                       )
                     ],
                   )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.white,
-                  ))
+              id == currentId
+                  ? PopupMenuButton<MenuItem>(
+                      itemBuilder: (context) => [
+                        ...MenuItems.items.map(buildItems).toList(),
+                      ],
+                    )
+                  : IconButton(onPressed: () {}, icon: Icon(Icons.add))
             ],
           ),
           const SizedBox(
@@ -66,6 +97,21 @@ class Posts extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
           ),
+          if (isImage == true)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                child: Image.network(
+                  image,
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(50),
+              ),
+            )
+          else
+            SizedBox(
+              height: 0,
+            ),
           Row(
             // mainAxisAlignment: ,
             // mainAxisSize: MainAxisSize.max,
@@ -80,7 +126,7 @@ class Posts extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const Text('0', style: TextStyle(color: Colors.white)),
+                  Text(heart, style: TextStyle(color: Colors.white)),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(
@@ -88,7 +134,7 @@ class Posts extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const Text('0', style: TextStyle(color: Colors.white)),
+                  Text(comment, style: TextStyle(color: Colors.white)),
                 ],
               ),
               IconButton(
@@ -104,4 +150,15 @@ class Posts extends StatelessWidget {
       ),
     );
   }
+
+  PopupMenuItem<MenuItem> buildItems(MenuItem item) => PopupMenuItem(
+        child: Row(
+          children: [
+            Icon(item.icon),
+            Text(
+              item.text,
+            ),
+          ],
+        ),
+      );
 }
