@@ -10,6 +10,7 @@ import 'package:sociality/view/screen/homescreen.dart';
 class LogInController extends GetxController {
   late TextEditingController email;
   late TextEditingController password;
+  
 
   GlobalKey<FormState> formstate = GlobalKey();
 

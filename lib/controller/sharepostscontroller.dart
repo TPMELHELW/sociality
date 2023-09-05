@@ -9,7 +9,7 @@ import 'package:sociality/data/sharepostsdata.dart';
 class SharePostsController extends GetxController {
   late TextEditingController description;
   GlobalKey<FormState> formState = GlobalKey();
-bool isMore = false;
+  bool isMore = false;
   SharePostsData data = SharePostsData(Get.find());
   late StatusRequest statusrequest;
   LogInController controller = Get.find();
@@ -23,16 +23,9 @@ bool isMore = false;
 
       if (statusrequest == StatusRequest.success) {
         if (responce['userId'] != null) {
-          // controller0.posts.add(responce);
-
-          update();
           description.clear();
-        } else {
-          print('1');
-        }
-      } else {
-        print('2');
-      }
+        } else {}
+      } else {}
     }
   }
 

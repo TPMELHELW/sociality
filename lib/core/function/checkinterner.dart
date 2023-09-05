@@ -1,12 +1,14 @@
 import 'dart:io';
 
-checkInternet() async {
+Future<bool> checkInternet() async {
   try {
-    var responce = await InternetAddress.lookup('google.com');
-    if (responce.isNotEmpty && responce[0].rawAddress.isNotEmpty) {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       return true;
     }
+    return false;
   } on SocketException catch (_) {
     return false;
   }
 }
+
