@@ -17,21 +17,18 @@ class LogIn extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeController controller0 = ThemeController();
     MyServices myServices = Get.find();
-    // Crud crud = Crud();
-    // LogInController controller = Get.put(LogInController());
+
     return Scaffold(
-      // backgroundColor: Colors.grey,
       appBar: AppBar(
-        // backgroundColor: Colors.transparent,
         elevation: 0,
-        title: TextAppBar(),
+        title: const TextAppBar(),
         centerTitle: true,
       ),
       body: GetBuilder<LogInController>(
         init: LogInController(),
         builder: (controller) => controller.statusRequest ==
                 StatusRequest.loading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Padding(
@@ -41,54 +38,51 @@ class LogIn extends StatelessWidget {
                     shrinkWrap: true,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color:
-                                myServices.sharedpref.getBool('dark') == true
-                                    ? Color(0xFF242526)
-                                    : Colors.white,
+                            color: myServices.sharedpref.getBool('dark') == true
+                                ? const Color(0xFF242526)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                  color:
-                                      myServices.sharedpref.getBool('dark') ==
-                                              false
-                                          ? Color(0xFF242526)
-                                          : Colors.white,
-                                  spreadRadius: 5,
-                                  blurRadius: 20)
+                                  color:Color.fromRGBO(0, 0, 0, 0.2),
+                                  spreadRadius: -1,
+                                  blurRadius: 1)
                             ]),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
+                            const Text(
                               'Welcome to Sociality',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Form(
                               key: controller.formstate,
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TextFormFieldAuth(
                                     controller: controller.email,
                                     label: 'Email',
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   TextFormFieldAuth(
                                     controller: controller.password,
                                     label: 'Password',
                                   ),
-                                  TextButtonAuth(
+                                   TextButtonAuth(
                                     text: 'Forget Passowrd?',
+                                    onpress: (){
+                                      Get.offAllNamed('/resetpassword');
+                                    },
                                   )
                                 ],
                               ),
@@ -101,10 +95,11 @@ class LogIn extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text("Don't have an account ?"),
+                                const Text("Don't have an account ?"),
                                 TextButtonAuth(
                                   text: 'Sign Up here',
-                                  onpress: () => Get.offAll(() => SignUp()),
+                                  onpress: () =>
+                                      Get.offAll(() => const SignUp()),
                                 ),
                               ],
                             ),
@@ -113,7 +108,7 @@ class LogIn extends StatelessWidget {
                                   controller0.onpress();
                                   controller.update();
                                 },
-                                icon: Icon(Icons.light))
+                                icon: const Icon(Icons.light)),
                           ],
                         ),
                       )

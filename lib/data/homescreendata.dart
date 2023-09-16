@@ -8,7 +8,7 @@ class HomeScreenData {
 
   getData(page,token) async {
     String getPosts =  "https://social-medai-mern-b696.vercel.app/posts?page=$page";
-    var responce = await crud.getRequest(getPosts,token);
+    var responce = await crud.getRequestHeaders(getPosts,token);
 
     return responce.fold((left) => left, (right) => right);
   }

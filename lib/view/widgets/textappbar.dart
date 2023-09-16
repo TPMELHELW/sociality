@@ -8,7 +8,11 @@ class TextAppBar extends StatelessWidget {
     return Text(
       'Sociality',
       style: TextStyle(
-          fontSize: 30, color: Color(0xFF00d5fa), fontWeight: FontWeight.bold),
+        fontSize: 30,
+        color: Color(0xFF00d5fa),
+        fontWeight: FontWeight.bold,
+        fontFamily: 'elhelw',
+      ),
     );
   }
 }

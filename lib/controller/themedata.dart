@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/controller/logincontroller.dart';
+
 import 'package:sociality/middleware/middleware.dart';
 
 class ThemeController {
-  // LogInController controller = Get.find();
-  // bool isDark = false;
   MyServices services = Get.find();
   onpress() {
     if (Get.isDarkMode) {
@@ -13,7 +11,6 @@ class ThemeController {
 
       Get.changeTheme(customLightTheme);
     } else {
-      // isDark = true;
       services.sharedpref.setBool('dark', true);
 
       Get.changeTheme(customDarkTheme);
@@ -21,11 +18,11 @@ class ThemeController {
   }
 
   ThemeData customDarkTheme = ThemeData.dark().copyWith(
-    // elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom()),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
     ),
     scaffoldBackgroundColor: const Color(0xFF242526),
+   
   );
   ThemeData customLightTheme = ThemeData.light().copyWith(
     appBarTheme: const AppBarTheme(

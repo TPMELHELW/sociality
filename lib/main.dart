@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/binding/binding.dart';
 import 'package:sociality/controller/themedata.dart';
+import 'package:sociality/core/constant/routes.dart';
 import 'package:sociality/middleware/middleware.dart';
-import 'package:sociality/test.dart';
 import 'view/screen/auth/login.dart';
 
 void main() async {
@@ -20,11 +20,12 @@ class MyApp extends StatelessWidget {
     MyServices myServices = Get.find();
     ThemeController controller = ThemeController();
     return GetMaterialApp(
-      theme: myServices.sharedpref.getBool('dark') == false
-          ? controller.customLightTheme
-          : controller.customDarkTheme,
-      home: LogIn(),
+      theme: myServices.sharedpref.getBool('dark') == true
+          ?controller.customDarkTheme
+          : controller.customLightTheme,
+     
       initialBinding: CrudBinding(),
+      getPages: routes,
     );
   }
 }

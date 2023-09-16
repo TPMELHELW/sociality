@@ -4,13 +4,13 @@ import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/logindata.dart';
 import 'package:sociality/middleware/middleware.dart';
+import 'package:sociality/test.dart';
 
 import 'package:sociality/view/screen/homescreen.dart';
 
 class LogInController extends GetxController {
   late TextEditingController email;
   late TextEditingController password;
-  
 
   GlobalKey<FormState> formstate = GlobalKey();
 
@@ -30,9 +30,12 @@ class LogInController extends GetxController {
         if (statusRequest == StatusRequest.success) {
           if (responce['user'] != null) {
             inf.add(responce);
-
-            // print(inf[0]['user']['_id']);
-            Get.off(() => HomeScreen());
+            myservices.sharedpref.setString("1", "login");
+            myservices.sharedpref.setString("token", inf[0]['accessToken']);
+            myservices.sharedpref.setString("id", inf[0]['user']['_id']);
+            email.clear();
+            password.clear();
+            Get.offAll(() => HomeScreen());
           } else {
             Get.defaultDialog(
               title: 'ALERT',

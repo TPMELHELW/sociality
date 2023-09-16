@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-
 import 'package:either_dart/either.dart';
 import 'package:http/http.dart' as http;
 import 'package:sociality/core/class/enum.dart';
@@ -26,10 +24,13 @@ class Crud {
       return Left(StatusRequest.serverFailure);
     }
   }
-  Future<Either<StatusRequest, Map>> postRequestHeaders(uri, body,header) async {
+
+  Future<Either<StatusRequest, Map>> postRequestHeaders(
+      uri, body, header) async {
     try {
       if (await checkInternet()) {
-        var responce = await http.post(Uri.parse(uri), body: body,headers: header);
+        var responce =
+            await http.post(Uri.parse(uri), body: body, headers: header);
         if (responce.statusCode == 201 || responce.statusCode == 200) {
           var responcebody = await jsonDecode(responce.body);
           return Right(responcebody);
@@ -45,10 +46,10 @@ class Crud {
     }
   }
 
-  Future<Either<StatusRequest, Map>> getRequest(uri,token) async {
+  Future<Either<StatusRequest, Map>> getRequestHeaders(uri, token) async {
     try {
       if (await checkInternet()) {
-        var responce = await http.get(Uri.parse(uri), headers:token);
+        var responce = await http.get(Uri.parse(uri), headers: token);
         if (responce.statusCode == 200 || responce.statusCode == 201) {
           var responcebody = await jsonDecode(responce.body);
           print('elhelw');
@@ -58,7 +59,7 @@ class Crud {
           return Left(StatusRequest.failure);
         }
       } else {
-          print('19');
+        print('19');
         return Left(StatusRequest.offline);
       }
     } catch (e) {
@@ -66,4 +67,26 @@ class Crud {
       return Left(StatusRequest.serverFailure);
     }
   }
+
+  Future<Either<StatusRequest, Map>> getRequest(url) async {
+    try {
+      if (await checkInternet()) {
+        var responce = await http.get(Uri.parse(url));
+        if (responce.statusCode == 200 || responce.statusCode == 201) {
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
+        } else {
+          var responcebodyerror = await jsonDecode(responce.body);
+          return Right(responcebodyerror);
+        }
+      } else {
+        print('2');
+        return Left(StatusRequest.offline);
+      }
+    } catch (e) {
+      print('3');
+      return Left(StatusRequest.serverFailure);
+    }
+  }
+
 }

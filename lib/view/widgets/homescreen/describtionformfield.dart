@@ -4,7 +4,8 @@ class DescribtionField extends StatelessWidget {
   final Key? global;
   final TextEditingController controller;
   final String text;
-  const DescribtionField({super.key, this.global, required this.controller, required this.text});
+  final Color color;
+  const DescribtionField({super.key, this.global, required this.controller, required this.text, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class DescribtionField extends StatelessWidget {
           decoration: InputDecoration(
             hintText:
                 text,
-            fillColor: const Color(0xFF333333),
+            fillColor:color,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
