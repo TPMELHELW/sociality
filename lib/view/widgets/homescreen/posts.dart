@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sociality/controller/infinitiscrollcontroller.dart';
 import 'package:sociality/core/model/menuitem.dart';
 import 'package:sociality/core/model/menuitems.dart';
+import 'package:sociality/view/screen/editposts.dart';
 
 class Posts extends StatelessWidget {
   final String text,
@@ -16,6 +19,7 @@ class Posts extends StatelessWidget {
       currentId;
   final bool isImage;
   final Color color;
+  final Map controller;
   const Posts(
       {super.key,
       required this.text,
@@ -28,7 +32,8 @@ class Posts extends StatelessWidget {
       required this.time,
       required this.id,
       required this.currentId,
-      required this.color});
+      required this.color,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +164,10 @@ class Posts extends StatelessWidget {
     if (item == MenuItems.itemDelete) {
       print('mahmouf');
     } else if (item == MenuItems.itemEdit) {
-      print('elhwlw');
+      Get.to(EditPost(
+        controllerScroll: controller,
+      ));
+      print(controller);
     }
   }
 }

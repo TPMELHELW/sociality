@@ -21,9 +21,8 @@ class MyApp extends StatelessWidget {
     ThemeController controller = ThemeController();
     return GetMaterialApp(
       theme: myServices.sharedpref.getBool('dark') == true
-          ?controller.customDarkTheme
+          ? controller.customDarkTheme
           : controller.customLightTheme,
-     
       initialBinding: CrudBinding(),
       getPages: routes,
     );

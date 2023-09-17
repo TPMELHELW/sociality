@@ -22,7 +22,9 @@ class SignUp extends StatelessWidget {
         appBar: AppBar(
           // backgroundColor: Colors.transparent,
           elevation: 0,
-          title: TextAppBar(),
+          title: TextAppBar(
+            text: 'Sign Up',
+          ),
           centerTitle: true,
         ),
         body: GetBuilder<SignUpController>(
@@ -48,13 +50,20 @@ class SignUp extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
-                                    color:
-                                        myServices.sharedpref.getBool('dark') ==
-                                                false
-                                            ? Color(0xFF242526)
-                                            : Colors.white,
-                                    spreadRadius: 5,
-                                    blurRadius: 20)
+                                    color: Color.fromRGBO(0, 0, 0, 0.2),
+                                    offset: Offset(0, 2),
+                                    blurRadius: 1,
+                                    spreadRadius: -1),
+                                BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.14),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 1,
+                                    spreadRadius: 1),
+                                BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.12),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 3,
+                                    spreadRadius: 1)
                               ]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,

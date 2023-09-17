@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/forgetpassword.dart';
+import 'package:sociality/data/resetpassworddata.dart';
 
-class ForgetPasswordController extends GetxController {
-  ForgetPassword getdata = ForgetPassword(Get.find());
-  late TextEditingController email;
-  late StatusRequest statusRequest;
+class ResetPasswordController extends GetxController {
+  late TextEditingController newpassword;
+  late TextEditingController confirmNewpassword;
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
 
-  getData() async {
+  ResetPasswordData getdata = ResetPasswordData(Get.find());
+  late StatusRequest statusRequest;
+
+  patchData() async {
     if (formstate.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
-      var responce = await getdata.getData(email.text);
+      var responce = await getdata.patchData(newpassword.text);
       statusRequest = handlingData(responce);
       if (statusRequest == StatusRequest.success) {
-        if (responce['msg'] == "you should receive an email") {
-          Get.offAllNamed('/verifycode');
+        if (responce['msg'] == "Updated Recorded") {
+          Get.offAllNamed('/login');
         } else {
+          // print('2');
           Get.defaultDialog(
             title: 'ALART',
             content: Text(responce['msg']),
             onConfirm: () => Get.back(),
           );
         }
+      }else{
+        print({1});
       }
+      update();
     }
-    update();
   }
 
   @override
   void onInit() {
-    super.onInit();
-    email = TextEditingController();
+    newpassword = TextEditingController();
+    confirmNewpassword = TextEditingController();
     statusRequest = StatusRequest.none;
+    super.onInit();
   }
 }

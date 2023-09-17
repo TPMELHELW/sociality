@@ -15,7 +15,7 @@ class VerifyCodeController extends GetxController {
     statusRequest = handlingData(responce);
     if (statusRequest == StatusRequest.success) {
       if (responce['flag'] != null) {
-        Get.offAllNamed('/login');
+        Get.offAllNamed('/resetpassword');
       } else {
         Get.defaultDialog(
           title: 'ALART',
@@ -24,6 +24,7 @@ class VerifyCodeController extends GetxController {
         );
       }
     }
+    update();
   }
 
   @override

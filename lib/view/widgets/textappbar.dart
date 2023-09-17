@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextAppBar extends StatelessWidget {
-  const TextAppBar({super.key});
+  final String text;
+  const TextAppBar({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Sociality',
+      text,
       style: TextStyle(
         fontSize: 30,
         color: Color(0xFF00d5fa),

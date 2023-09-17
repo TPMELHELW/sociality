@@ -35,7 +35,9 @@ class HomeScreen extends StatelessWidget {
           )
         ],
         elevation: 0,
-        title: const TextAppBar(),
+        title: TextAppBar(
+          text: 'Sociality',
+        ),
         centerTitle: true,
       ),
       body: GetBuilder<Scroll>(
@@ -133,6 +135,7 @@ class HomeScreen extends StatelessWidget {
                       color: myservices.sharedpref.getBool('dark') == true
                           ? const Color(0xFF242526)
                           : Colors.white,
+                      controller: controller.posts[index],
                     );
                   } else {
                     return Center(

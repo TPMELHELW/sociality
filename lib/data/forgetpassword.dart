@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
 import 'package:sociality/core/class/crud.dart';
 
-class ResetPasswordData {
+class ForgetPassword {
   Crud crud;
-  ResetPasswordData(this.crud);
+  ForgetPassword(this.crud);
 
   getData(email) async {
     var responce =await crud.getRequest(

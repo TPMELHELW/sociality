@@ -21,7 +21,7 @@ class LogIn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const TextAppBar(),
+        title:  TextAppBar(text: 'Sociality',),
         centerTitle: true,
       ),
       body: GetBuilder<LogInController>(
@@ -44,11 +44,25 @@ class LogIn extends StatelessWidget {
                                 ? const Color(0xFF242526)
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
+                            boxShadow:const [
                               BoxShadow(
                                   color:Color.fromRGBO(0, 0, 0, 0.2),
-                                  spreadRadius: -1,
-                                  blurRadius: 1)
+                                 offset: Offset(0,2),
+                                 blurRadius: 1,
+                                 spreadRadius: -1
+                                 ),
+                              BoxShadow(
+                                  color:Color.fromRGBO(0, 0, 0, 0.14),
+                                 offset: Offset(0,1),
+                                 blurRadius: 1,
+                                 spreadRadius: 1
+                                 ),
+                              BoxShadow(
+                                  color:Color.fromRGBO(0, 0, 0, 0.12),
+                                 offset: Offset(0,1),
+                                 blurRadius:3,
+                                 spreadRadius: 1
+                                 )
                             ]),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -81,7 +95,7 @@ class LogIn extends StatelessWidget {
                                    TextButtonAuth(
                                     text: 'Forget Passowrd?',
                                     onpress: (){
-                                      Get.offAllNamed('/resetpassword');
+                                      Get.toNamed('/forgetpassword');
                                     },
                                   )
                                 ],

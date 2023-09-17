@@ -21,7 +21,7 @@ class ThemeController {
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
     ),
-    scaffoldBackgroundColor: const Color(0xFF242526),
+    scaffoldBackgroundColor: const Color(0xFF0a0a0a),
    
   );
   ThemeData customLightTheme = ThemeData.light().copyWith(

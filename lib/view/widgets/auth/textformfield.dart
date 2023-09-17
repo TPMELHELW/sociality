@@ -4,16 +4,18 @@ class TextFormFieldAuth extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final void Function(String)? onchanged;
   const TextFormFieldAuth(
       {super.key,
       required this.label,
       required this.controller,
-      this.validator});
+      this.validator, this.onchanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator: validator,
+      onChanged: onchanged,
       controller: controller,
       decoration: InputDecoration(
         labelText: label,

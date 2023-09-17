@@ -89,4 +89,46 @@ class Crud {
     }
   }
 
+  Future<Either<StatusRequest, Map>> patchRequest(url, body) async {
+    try {
+      if (await checkInternet()) {
+        var responce = await http.patch(Uri.parse(url), body: body);
+        if (responce.statusCode == 200 || responce.statusCode == 201) {
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
+        } else {
+          print('gfds');
+          var responcebodyerror = await jsonDecode(responce.body);
+          return Right(responcebodyerror);
+        }
+      } else {
+        return Left(StatusRequest.offline);
+      }
+    } catch (e) {
+      print({e});
+      print('mahmouf');
+      return Left(StatusRequest.serverFailure);
+    }
+  }
+  Future<Either<StatusRequest, Map>> patchRequestHeaders(url, body,token) async {
+    try {
+      if (await checkInternet()) {
+        var responce = await http.patch(Uri.parse(url), body: body,headers: token);
+        if (responce.statusCode == 200 || responce.statusCode == 201) {
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
+        } else {
+          print('gfds');
+          var responcebodyerror = await jsonDecode(responce.body);
+          return Right(responcebodyerror);
+        }
+      } else {
+        return Left(StatusRequest.offline);
+      }
+    } catch (e) {
+      print({e});
+      print('mahmouf');
+      return Left(StatusRequest.serverFailure);
+    }
+  }
 }
