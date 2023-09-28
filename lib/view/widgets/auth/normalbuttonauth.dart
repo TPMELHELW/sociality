@@ -9,13 +9,13 @@ class NormalButtonAuth extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onpress,
-      child: Text(text),
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(50, 50),
+        minimumSize: const Size(50, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
+      child: Text(text),
     );
   }
 }

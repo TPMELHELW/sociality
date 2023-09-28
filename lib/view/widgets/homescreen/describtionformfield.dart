@@ -5,7 +5,6 @@ class DescribtionField extends StatelessWidget {
   final TextEditingController controller;
   final String text;
   final Color color;
-  // final String? initial;
   const DescribtionField({
     super.key,
     this.global,
@@ -21,7 +20,6 @@ class DescribtionField extends StatelessWidget {
       child: Form(
         key: global,
         child: TextFormField(
-          // initialValue: initial,
           controller: controller,
           decoration: InputDecoration(
             hintText: text,

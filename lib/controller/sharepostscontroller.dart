@@ -5,6 +5,7 @@ import 'package:sociality/controller/logincontroller.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/sharepostsdata.dart';
+import 'package:sociality/middleware/middleware.dart';
 
 class SharePostsController extends GetxController {
   late TextEditingController description;
@@ -13,6 +14,7 @@ class SharePostsController extends GetxController {
   SharePostsData data = SharePostsData(Get.find());
   late StatusRequest statusrequest;
   LogInController controller = Get.find();
+  MyServices myservices = Get.find();
   Scroll controller0 = Get.put(Scroll());
   postData() async {
     if (formState.currentState!.validate()) {
@@ -20,13 +22,23 @@ class SharePostsController extends GetxController {
       var responce = await data.postData(description.text,
           {'Authorization': 'Bearer ${controller.inf[0]['accessToken']}'});
       statusrequest = handlingData(responce);
-
       if (statusrequest == StatusRequest.success) {
         if (responce['userId'] != null) {
           description.clear();
         } else {}
       } else {}
     }
+  }
+
+  logOut() async {
+    statusrequest = StatusRequest.loading;
+    var responce = await data.postData(description.text, {
+      'Authorization': 'Bearer ${myservices.sharedpref.getString('token')}',
+    });
+    statusrequest = handlingData(responce);
+
+    if (statusrequest == StatusRequest.success) {
+    } else {}
   }
 
   @override

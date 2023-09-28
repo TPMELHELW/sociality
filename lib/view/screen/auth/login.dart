@@ -21,7 +21,7 @@ class LogIn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title:  TextAppBar(text: 'Sociality',),
+        title:  const TextAppBar(text: 'Sociality',),
         centerTitle: true,
       ),
       body: GetBuilder<LogInController>(

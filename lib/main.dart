@@ -4,12 +4,11 @@ import 'package:sociality/binding/binding.dart';
 import 'package:sociality/controller/themedata.dart';
 import 'package:sociality/core/constant/routes.dart';
 import 'package:sociality/middleware/middleware.dart';
-import 'view/screen/auth/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initial();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

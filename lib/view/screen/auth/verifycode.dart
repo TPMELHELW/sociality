@@ -12,7 +12,7 @@ class VerifyCode extends StatelessWidget {
     MyServices myServices = Get.find();
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Verify Code',
             style: TextStyle(
                 fontSize: 30,
@@ -50,8 +50,8 @@ class VerifyCode extends StatelessWidget {
                           blurRadius: 3,
                           spreadRadius: 1)
                     ]),
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                padding: EdgeInsets.all(20),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.all(20),
                 child: OtpTextField(
                   fieldWidth: 40,
                   numberOfFields: 6,

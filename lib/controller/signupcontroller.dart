@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
-import 'package:sociality/core/constant/linkapi.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/signupdata.dart';
 import 'package:sociality/view/screen/auth/login.dart';
@@ -23,15 +21,13 @@ class SignUpController extends GetxController {
     if (formstate.currentState!.validate()) {
       statusrequest = StatusRequest.loading;
       update();
-      var responce = await data.getData(firstName.text, lastName.text,
+      Map responce = await data.getData(firstName.text, lastName.text,
           email.text, password.text, location.text, occupation.text);
       statusrequest = handlingData(responce);
       if (statusrequest == StatusRequest.success) {
         if (responce['firstName'] != null) {
-          Get.offAll(() => LogIn());
+          Get.offAll(() => const LogIn());
         } else {
-          print('mahmoud');
-          // statusrequest = StatusRequest.failure;
           Get.defaultDialog(
             title: 'ALART',
             content: Text(responce['msg']),
@@ -39,7 +35,6 @@ class SignUpController extends GetxController {
           );
         }
       } else {
-        print('elhelw');
         statusrequest = StatusRequest.serverFailure;
       }
     }

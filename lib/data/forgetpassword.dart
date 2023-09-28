@@ -1,4 +1,3 @@
-import 'package:either_dart/either.dart';
 import 'package:sociality/core/class/crud.dart';
 
 class ForgetPassword {

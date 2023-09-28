@@ -4,8 +4,6 @@ import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/logindata.dart';
 import 'package:sociality/middleware/middleware.dart';
-import 'package:sociality/test.dart';
-
 import 'package:sociality/view/screen/homescreen.dart';
 
 class LogInController extends GetxController {
@@ -25,17 +23,27 @@ class LogInController extends GetxController {
       if (formData.validate()) {
         statusRequest = StatusRequest.loading;
         update();
-        var responce = await data.getData(email.text, password.text);
+        Map responce = await data.getData(email.text, password.text);
         statusRequest = handlingData(responce);
         if (statusRequest == StatusRequest.success) {
           if (responce['user'] != null) {
+            inf.clear();
             inf.add(responce);
             myservices.sharedpref.setString("1", "login");
             myservices.sharedpref.setString("token", inf[0]['accessToken']);
             myservices.sharedpref.setString("id", inf[0]['user']['_id']);
+            myservices.sharedpref
+                .setString("firstname", inf[0]['user']['firstName']);
+            myservices.sharedpref
+                .setString("lastname", inf[0]['user']['lastName']);
+            myservices.sharedpref.setString("email", inf[0]['user']['email']);
+            myservices.sharedpref
+                .setString("location", inf[0]['user']['location']);
+            myservices.sharedpref
+                .setString("occupation", inf[0]['user']['occupation']);
             email.clear();
             password.clear();
-            Get.offAll(() => HomeScreen());
+            Get.offAll(() => const HomeScreen());
           } else {
             Get.defaultDialog(
               title: 'ALERT',
@@ -43,13 +51,9 @@ class LogInController extends GetxController {
               onConfirm: () => Get.back(),
             );
           }
-        } else {
-          print('4');
-        }
+        } else {}
       }
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (e) {}
     update();
   }
 

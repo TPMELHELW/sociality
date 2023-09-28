@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/controller/infinitiscrollcontroller.dart';
-import 'package:sociality/controller/logincontroller.dart';
 import 'package:sociality/controller/sharepostscontroller.dart';
 import 'package:sociality/controller/themedata.dart';
-import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/view/screen/auth/login.dart';
-import 'package:sociality/view/screen/profile.dart';
+import 'package:sociality/view/screen/settings.dart';
 import 'package:sociality/view/widgets/homescreen/describtionformfield.dart';
 import 'package:sociality/view/widgets/homescreen/imagebutton.dart';
 import 'package:sociality/view/widgets/homescreen/posts.dart';
@@ -19,23 +17,42 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // LogInController controller1 = Get.find();
     SharePostsController controller2 = Get.put(SharePostsController());
     ThemeController controller0 = ThemeController();
     MyServices myservices = Get.find();
     return Scaffold(
+      bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            ),
+          ),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            IconButton(
+                onPressed: () {
+                  Get.to(() => const Settings());
+                },
+                icon: const Icon(Icons.settings)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.home))
+          ])),
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: ()async {
               myservices.sharedpref.clear();
-              Get.offAll(LogIn());
+             await controller2.logOut();
+              Get.offAll(const LogIn());
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           )
         ],
         elevation: 0,
-        title: TextAppBar(
+        title: const TextAppBar(
           text: 'Sociality',
         ),
         centerTitle: true,
@@ -136,10 +153,11 @@ class HomeScreen extends StatelessWidget {
                           ? const Color(0xFF242526)
                           : Colors.white,
                       controller: controller.posts[index],
+                      textComment: controller.posts[index]['comments'],
                     );
                   } else {
-                    return Center(
-                      child: const CircularProgressIndicator(),
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   }
                 },

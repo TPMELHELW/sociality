@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:sociality/controller/forgetpasswordcontroller.dart';
 import 'package:sociality/core/class/enum.dart';
@@ -9,6 +8,8 @@ import 'package:sociality/view/widgets/auth/normalbuttonauth.dart';
 import 'package:sociality/view/widgets/auth/textformfield.dart';
 
 class ForgetPassword extends StatelessWidget {
+  const ForgetPassword({super.key});
+
   @override
   Widget build(BuildContext context) {
     MyServices myServices = Get.find();

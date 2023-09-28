@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/forgetpassword.dart';
@@ -15,7 +14,7 @@ class ForgetPasswordController extends GetxController {
     if (formstate.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
-      var responce = await getdata.getData(email.text);
+      Map responce = await getdata.getData(email.text);
       statusRequest = handlingData(responce);
       if (statusRequest == StatusRequest.success) {
         if (responce['msg'] == "you should receive an email") {

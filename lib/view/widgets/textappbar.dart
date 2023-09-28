@@ -8,7 +8,7 @@ class TextAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 30,
         color: Color(0xFF00d5fa),
         fontWeight: FontWeight.bold,

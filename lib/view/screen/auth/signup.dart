@@ -18,11 +18,9 @@ class SignUp extends StatelessWidget {
     ThemeController controller0 = ThemeController();
     MyServices myServices = Get.find();
     return Scaffold(
-        // backgroundColor: Colors.grey,
         appBar: AppBar(
-          // backgroundColor: Colors.transparent,
           elevation: 0,
-          title: TextAppBar(
+          title: const TextAppBar(
             text: 'Sign Up',
           ),
           centerTitle: true,
@@ -31,7 +29,7 @@ class SignUp extends StatelessWidget {
           init: SignUpController(),
           builder: (controller) => controller.statusrequest ==
                   StatusRequest.loading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : Padding(
@@ -41,14 +39,14 @@ class SignUp extends StatelessWidget {
                       shrinkWrap: true,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color:
                                   myServices.sharedpref.getBool('dark') == true
-                                      ? Color(0xFF242526)
+                                      ? const Color(0xFF242526)
                                       : Colors.white,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                     color: Color.fromRGBO(0, 0, 0, 0.2),
                                     offset: Offset(0, 2),
@@ -90,7 +88,7 @@ class SignUp extends StatelessWidget {
                                             label: 'First Name',
                                           ),
                                         ),
-                                        SizedBox(width: 10),
+                                        const SizedBox(width: 10),
                                         Expanded(
                                           child: TextFormFieldAuth(
                                             controller: controller.lastName,
@@ -99,28 +97,28 @@ class SignUp extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     TextFormFieldAuth(
                                       controller: controller.location,
                                       label: 'Location',
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     TextFormFieldAuth(
                                       controller: controller.occupation,
                                       label: 'Ocuupation',
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     TextFormFieldAuth(
                                       controller: controller.email,
                                       label: 'Email',
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     TextFormFieldAuth(
@@ -130,7 +128,7 @@ class SignUp extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               NormalButtonAuth(
@@ -141,10 +139,11 @@ class SignUp extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Text("Already have an account ? "),
+                                  const Text("Already have an account ? "),
                                   TextButtonAuth(
                                     text: 'Login here.',
-                                    onpress: () => Get.offAll(() => LogIn()),
+                                    onpress: () =>
+                                        Get.offAll(() => const LogIn()),
                                   ),
                                 ],
                               ),
@@ -153,7 +152,7 @@ class SignUp extends StatelessWidget {
                                     controller0.onpress();
                                     controller.update();
                                   },
-                                  icon: Icon(Icons.light))
+                                  icon: const Icon(Icons.light))
                             ],
                           ),
                         )

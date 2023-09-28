@@ -11,7 +11,7 @@ class VerifyCodeController extends GetxController {
 
   verificationCode(code) async {
     statusRequest = StatusRequest.loading;
-    var responce = await getdata.getData(code);
+    Map responce = await getdata.getData(code);
     statusRequest = handlingData(responce);
     if (statusRequest == StatusRequest.success) {
       if (responce['flag'] != null) {

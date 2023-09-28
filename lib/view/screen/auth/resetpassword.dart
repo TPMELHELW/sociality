@@ -12,11 +12,10 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ResetPasswordController controller = Get.put(ResetPasswordController());
     MyServices myServices = Get.find();
     return Scaffold(
         appBar: AppBar(
-          title: TextAppBar(text: 'ResetPassword'),
+          title: const TextAppBar(text: 'ResetPassword'),
           elevation: 0,
           centerTitle: true,
         ),
@@ -24,7 +23,7 @@ class ResetPassword extends StatelessWidget {
           init: ResetPasswordController(),
           builder: (controller) => controller.statusRequest ==
                   StatusRequest.loading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : Padding(
@@ -39,7 +38,7 @@ class ResetPassword extends StatelessWidget {
                                 ? const Color(0xFF242526)
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                   color: Color.fromRGBO(0, 0, 0, 0.2),
                                   offset: Offset(0, 2),
@@ -56,7 +55,7 @@ class ResetPassword extends StatelessWidget {
                                   blurRadius: 3,
                                   spreadRadius: 1)
                             ]),
-                            padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Form(
                           key: controller.formstate,
                           child: Column(
@@ -67,7 +66,7 @@ class ResetPassword extends StatelessWidget {
                                 label: 'Enter New Password',
                                 controller: controller.newpassword,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               TextFormFieldAuth(
@@ -80,7 +79,7 @@ class ResetPassword extends StatelessWidget {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               NormalButtonAuth(

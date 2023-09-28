@@ -18,7 +18,7 @@ class EditPostController extends GetxController {
     if (formState.currentState!.validate()) {
       statusrequest = StatusRequest.loading;
       update();
-      var responce = await getdata.patchData(postId, desc, {
+      Map responce = await getdata.patchData(postId, desc, {
         'Authorization': 'Bearer ${myservices.sharedpref.getString('token')}'
       });
       statusrequest = handlingData(responce);

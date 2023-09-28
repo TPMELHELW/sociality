@@ -17,11 +17,10 @@ class Crud {
           return Right(responcebodyerror);
         }
       } else {
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      // print('3');
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
     }
   }
 
@@ -39,10 +38,10 @@ class Crud {
           return Right(responcebodyerror);
         }
       } else {
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
     }
   }
 
@@ -52,19 +51,16 @@ class Crud {
         var responce = await http.get(Uri.parse(uri), headers: token);
         if (responce.statusCode == 200 || responce.statusCode == 201) {
           var responcebody = await jsonDecode(responce.body);
-          print('elhelw');
           return Right(responcebody);
         } else {
-          print('8');
-          return Left(StatusRequest.failure);
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
         }
       } else {
-        print('19');
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      print(e);
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
     }
   }
 
@@ -80,12 +76,10 @@ class Crud {
           return Right(responcebodyerror);
         }
       } else {
-        print('2');
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      print('3');
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
     }
   }
 
@@ -97,38 +91,55 @@ class Crud {
           var responcebody = await jsonDecode(responce.body);
           return Right(responcebody);
         } else {
-          print('gfds');
           var responcebodyerror = await jsonDecode(responce.body);
           return Right(responcebodyerror);
         }
       } else {
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      print({e});
-      print('mahmouf');
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
     }
   }
-  Future<Either<StatusRequest, Map>> patchRequestHeaders(url, body,token) async {
+
+  Future<Either<StatusRequest, Map>> patchRequestHeaders(
+      url, body, token) async {
     try {
       if (await checkInternet()) {
-        var responce = await http.patch(Uri.parse(url), body: body,headers: token);
+        var responce =
+            await http.patch(Uri.parse(url), body: body, headers: token);
         if (responce.statusCode == 200 || responce.statusCode == 201) {
           var responcebody = await jsonDecode(responce.body);
           return Right(responcebody);
         } else {
-          print('gfds');
           var responcebodyerror = await jsonDecode(responce.body);
           return Right(responcebodyerror);
         }
       } else {
-        return Left(StatusRequest.offline);
+        return const Left(StatusRequest.offline);
       }
     } catch (e) {
-      print({e});
-      print('mahmouf');
-      return Left(StatusRequest.serverFailure);
+      return const Left(StatusRequest.serverFailure);
+    }
+  }
+
+  Future<Either<StatusRequest, Map>> deleteRequest(url, token) async {
+    try {
+      if (await checkInternet()) {
+        var responce = await http.delete(Uri.parse(url), headers: token);
+        if (responce.statusCode == 200 || responce.statusCode == 201) {
+          var responcebody = await jsonDecode(responce.body);
+          return Right(responcebody);
+        } else {
+          var responcebody = await jsonDecode(responce.body);
+
+          return Right(responcebody);
+        }
+      } else {
+        return const Left(StatusRequest.offline);
+      }
+    } catch (e) {
+      return const Left(StatusRequest.serverFailure);
     }
   }
 }

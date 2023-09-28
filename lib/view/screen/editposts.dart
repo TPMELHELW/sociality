@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/controller/editpostcontroller.dart';
-import 'package:sociality/controller/infinitiscrollcontroller.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/view/widgets/auth/normalbuttonauth.dart';
-import 'package:sociality/view/widgets/homescreen/describtionformfield.dart';
 
 class EditPost extends StatelessWidget {
   final Map controllerScroll;
@@ -30,7 +28,7 @@ class EditPost extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 controller.statusrequest == StatusRequest.loading
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : Container(

@@ -1,5 +1,4 @@
 import 'package:sociality/core/class/crud.dart';
-import 'package:sociality/core/constant/linkapi.dart';
 
 class HomeScreenData {
   Crud crud;

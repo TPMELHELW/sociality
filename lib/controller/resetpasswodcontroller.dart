@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
-import 'package:sociality/data/forgetpassword.dart';
 import 'package:sociality/data/resetpassworddata.dart';
 
 class ResetPasswordController extends GetxController {
@@ -17,22 +16,19 @@ class ResetPasswordController extends GetxController {
     if (formstate.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
-      var responce = await getdata.patchData(newpassword.text);
+      Map responce = await getdata.patchData(newpassword.text);
       statusRequest = handlingData(responce);
       if (statusRequest == StatusRequest.success) {
         if (responce['msg'] == "Updated Recorded") {
           Get.offAllNamed('/login');
         } else {
-          // print('2');
           Get.defaultDialog(
             title: 'ALART',
             content: Text(responce['msg']),
             onConfirm: () => Get.back(),
           );
         }
-      }else{
-        print({1});
-      }
+      } else {}
       update();
     }
   }
