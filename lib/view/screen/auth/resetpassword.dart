@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/controller/resetpasswodcontroller.dart';
+import 'package:sociality/controller/reset_password_controller.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/view/widgets/auth/normalbuttonauth.dart';
-import 'package:sociality/view/widgets/auth/textformfield.dart';
+import 'package:sociality/view/widgets/auth/auth_text_field_widget.dart';
 import 'package:sociality/view/widgets/textappbar.dart';
 
 class ResetPassword extends StatelessWidget {

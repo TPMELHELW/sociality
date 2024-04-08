@@ -45,7 +45,8 @@ class Crud {
     }
   }
 
-  Future<Either<StatusRequest, Map>> getRequestHeaders(uri, token) async {
+  Future<Either<StatusRequest, Map>> getRequestHeaders(
+      String uri, Map<String, String> token) async {
     try {
       if (await checkInternet()) {
         var responce = await http.get(Uri.parse(uri), headers: token);

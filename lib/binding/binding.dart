@@ -1,11 +1,9 @@
-import 'package:get/get.dart';
-import 'package:sociality/controller/logincontroller.dart';
-import 'package:sociality/core/class/crud.dart';
+// import 'package:get/get.dart';
+// import 'package:sociality/controller/login_controller.dart';
 
-class CrudBinding extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(Crud());
-    Get.put(LogInController());
-  }
-}
+// class MainBinding extends Bindings {
+//   @override
+//   void dependencies() {
+//     Get.put(LogInController());
+//   }
+// }

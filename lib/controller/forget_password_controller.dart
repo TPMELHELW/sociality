@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/forgetpassword.dart';
 
 class ForgetPasswordController extends GetxController {
-  ForgetPassword getdata = ForgetPassword(Get.find());
+  ForgetPassword getdata = ForgetPassword(Crud());
   late TextEditingController email;
   late StatusRequest statusRequest;
   GlobalKey<FormState> formstate = GlobalKey<FormState>();

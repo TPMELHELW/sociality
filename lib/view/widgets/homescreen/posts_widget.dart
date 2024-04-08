@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:sociality/controller/infinitiscrollcontroller.dart';
 import 'package:sociality/controller/likescontroller.dart';
 import 'package:sociality/controller/profilescreencontroller.dart';
+import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/model/menuitem.dart';
 import 'package:sociality/core/model/menuitems.dart';
 import 'package:sociality/data/addfriend.dart';
@@ -15,46 +15,27 @@ import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/view/screen/editposts.dart';
 import 'package:sociality/view/screen/profilescreen.dart';
 
-
 class Posts extends StatelessWidget {
-  final String text,
-      body,
-      image,
-      profileImage,
-      heart,
-      comment,
-      time,
-      id,
-      currentId;
+  final String currentId;
   final bool isImage;
   final Color color;
-  final Map controller;
-  final List textComment;
+  final Map item;
 
-  Posts(
-      {super.key,
-      required this.text,
-      required this.body,
-      required this.image,
-      required this.isImage,
-      required this.profileImage,
-      required this.heart,
-      required this.comment,
-      required this.time,
-      required this.id,
-      required this.currentId,
-      required this.color,
-      required this.controller,
-      required this.textComment});
+  Posts({
+    super.key,
+    required this.currentId,
+    required this.isImage,
+    required this.color,
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
-    String backendTimeString = time;
+    String backendTimeString = item['createdAt'];
     DateTime backendTime = DateTime.parse(backendTimeString);
     String formattedTime = DateFormat.yMMMMd().add_jms().format(backendTime);
     ProfileScreenController controller1 = Get.put(ProfileScreenController());
-    AddFriendData addFreind = AddFriendData(Get.find());
-    Scroll controller3 = Get.put(Scroll());
+    AddFriendData addFreind = AddFriendData(Crud());
     bool isExist = false;
     return Container(
       width: double.infinity,
@@ -77,12 +58,13 @@ class Posts extends StatelessWidget {
                       flex: 1,
                       child: GestureDetector(
                         onTap: () async {
-                          await controller1.getData(id);
+                          await controller1.getData('${item['userId']['_id']}');
                           Get.to(() => const ProfileScreen());
                         },
                         child: CircleAvatar(
                           maxRadius: 25,
-                          backgroundImage: NetworkImage(profileImage),
+                          backgroundImage:
+                              NetworkImage('${item['userId']['picturePath']}'),
                           onBackgroundImageError: (exception, stackTrace) =>
                               print('gfdsdf'),
                         ),
@@ -93,7 +75,7 @@ class Posts extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(text,
+                            Text('${item['userId']['firstName']}',
                                 style: const TextStyle(
                                     fontSize: 18.5,
                                     fontWeight: FontWeight.bold)),
@@ -102,7 +84,7 @@ class Posts extends StatelessWidget {
                             )
                           ],
                         )),
-                    id == currentId
+                    '${item['userId']['_id']}' == currentId
                         ? PopupMenuButton<MenuItem>(
                             onSelected: (item) => onSelected(context, item),
                             itemBuilder: (context) => [
@@ -112,11 +94,10 @@ class Posts extends StatelessWidget {
                         : IconButton(
                             onPressed: () async {
                               var responce = await addFreind.addFriend(
-                                  currentId, id, {
+                                  currentId, '${item['userId']['_id']}', {
                                 'Authorization':
                                     'Bearer ${myservices.sharedpref.getString('token')}'
                               });
-                              print(responce);
                             },
                             icon: const Icon(Icons.add))
                   ],
@@ -127,7 +108,7 @@ class Posts extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    body,
+                    '${item['description']}',
                     textAlign: TextAlign.left,
                   ),
                 ),
@@ -137,7 +118,7 @@ class Posts extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Image.network(
-                        image,
+                        '${item['picturePath']}',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -153,20 +134,20 @@ class Posts extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            await controller0.like(
-                                controller['_id'], controller['userId']['_id']);
-                            controller3.updateRequest(
-                                controller, controller0.likeUpdate['likes']);
+                            // await controller0.like(
+                            //     item['_id'], item['userId']['_id']);
+                            // controller3.updateRequest(
+                            //     item, controller0.likeUpdate['likes']);
                             controller0.update();
                           },
                           icon: Icon(
-                            controller['likes'][currentId] != null
+                            item['likes'][currentId] != null
                                 ? CupertinoIcons.heart_fill
                                 : CupertinoIcons.heart,
                           ),
                         ),
                         Text(
-                          heart,
+                          '${item['likes'].length}',
                         ),
                         IconButton(
                           onPressed: () {
@@ -223,51 +204,54 @@ class Posts extends StatelessWidget {
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: textComment.length,
-                                      itemBuilder: (context, i) => comment ==
-                                              "0"
-                                          ? const SizedBox(
-                                              height: 0,
-                                            )
-                                          : Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Expanded(
-                                                    flex: 1,
-                                                    child: CircleAvatar(
-                                                      maxRadius: 25,
-                                                      backgroundImage:
-                                                          NetworkImage(textComment[
-                                                                  i]['postedBy']
-                                                              ['picturePath']),
-                                                      onBackgroundImageError:
-                                                          (exception,
-                                                                  stackTrace) =>
-                                                              print('gfdsdf'),
-                                                    )),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Column(
-                                                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                    children: [
-                                                      Text(
-                                                        textComment[i]
-                                                                ['postedBy']
-                                                            ['firstName'],
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                      itemCount: item['comments'].length,
+                                      itemBuilder: (context, i) =>
+                                          '${item['comments'].length}' == "0"
+                                              ? const SizedBox(
+                                                  height: 0,
+                                                )
+                                              : Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: CircleAvatar(
+                                                          maxRadius: 25,
+                                                          backgroundImage: NetworkImage(
+                                                              item['comments']
+                                                                          [i][
+                                                                      'postedBy']
+                                                                  [
+                                                                  'picturePath']),
+                                                          onBackgroundImageError:
+                                                              (exception,
+                                                                      stackTrace) =>
+                                                                  print(
+                                                                      'gfdsdf'),
+                                                        )),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Column(
+                                                        // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                        children: [
+                                                          Text(
+                                                            item['comments'][i]
+                                                                    ['postedBy']
+                                                                ['firstName'],
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Text(item['comments']
+                                                              [i]['text'])
+                                                        ],
                                                       ),
-                                                      Text(textComment[i]
-                                                          ['text'])
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
                                       separatorBuilder:
                                           (BuildContext context, int index) {
                                         return const Divider();
@@ -283,7 +267,7 @@ class Posts extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          comment,
+                          '${item['comments'].length}',
                         ),
                       ],
                     ),
@@ -301,7 +285,7 @@ class Posts extends StatelessWidget {
     );
   }
 
-  DeletePostData delete = DeletePostData(Get.find());
+  DeletePostData delete = DeletePostData(Crud());
   MyServices myservices = Get.find();
   PopupMenuItem<MenuItem> buildItems(MenuItem item) => PopupMenuItem<MenuItem>(
         value: item,
@@ -315,7 +299,7 @@ class Posts extends StatelessWidget {
         ),
       );
   deletedata() async {
-    var responce = await delete.deleteData(controller['_id'], {
+    var responce = await delete.deleteData(item['_id'], {
       'Authorization': 'Bearer ${myservices.sharedpref.getString('token')}'
     });
     if (responce['msg'] == 'Post has been deleted successfully') {
@@ -323,14 +307,13 @@ class Posts extends StatelessWidget {
     }
   }
 
-  void onSelected(BuildContext contex, MenuItem item) {
-    if (item == MenuItems.itemDelete) {
+  void onSelected(BuildContext contex, MenuItem items) {
+    if (items == MenuItems.itemDelete) {
       deletedata();
-    } else if (item == MenuItems.itemEdit) {
+    } else if (items == MenuItems.itemEdit) {
       Get.to(EditPost(
-        controllerScroll: controller,
+        controllerScroll: item,
       ));
-     
     }
   }
 }

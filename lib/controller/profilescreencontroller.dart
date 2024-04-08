@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/profilescreendata.dart';
 import 'package:sociality/middleware/middleware.dart';
 
 class ProfileScreenController extends GetxController {
-  ProfileScreenData getdata = ProfileScreenData(Get.find());
+  ProfileScreenData getdata = ProfileScreenData(Crud());
   late StatusRequest statusRequest;
   MyServices myservices = Get.find();
   List posts = [];

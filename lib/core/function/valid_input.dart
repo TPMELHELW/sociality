@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-validInput(val, min, max, type) {
+validInput(String val, int min, int max, String type) {
   if (type == 'email') {
     if (!GetUtils.isEmail(val)) {
       return "Not Valid Email";
