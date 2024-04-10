@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/class/crud.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/settingsdata.dart';
-import 'package:sociality/middleware/middleware.dart';
+import 'package:sociality/middleware/services.dart';
 
 class SettingsController extends GetxController {
   late TextEditingController firstName;
@@ -14,7 +15,7 @@ class SettingsController extends GetxController {
   late TextEditingController occupation;
   MyServices myservices = Get.find();
 
-  SettingsData patchdata = SettingsData(Get.find());
+  SettingsData patchdata = SettingsData(Crud());
 
   late StatusRequest statusRequest;
   updateData() async {
@@ -37,6 +38,36 @@ class SettingsController extends GetxController {
     }
   }
 
+  MyServices services = Get.find();
+  late ThemeMode themeMode;
+
+  void toggleTheme() {
+    if (themeMode == ThemeMode.dark) {
+      services.sharedpref.setBool("dark", false);
+
+      themeMode = ThemeMode.light;
+      update();
+    } else {
+      services.sharedpref.setBool("dark", true);
+
+      themeMode = ThemeMode.dark;
+    }
+    update();
+  }
+
+  ThemeData customDarkTheme = ThemeData.dark().copyWith(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+    ),
+    scaffoldBackgroundColor: const Color(0xFF0a0a0a),
+  );
+  ThemeData customLightTheme = ThemeData.light().copyWith(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+    ),
+    scaffoldBackgroundColor: const Color(0xFFf6f6f6),
+  );
+
   @override
   void onInit() {
     firstName = TextEditingController();
@@ -53,6 +84,14 @@ class SettingsController extends GetxController {
     password.text = '${myservices.sharedpref.getString("password")}';
 
     statusRequest = StatusRequest.none;
+    if (myservices.sharedpref.getBool('dark') == true ||
+        Get.isPlatformDarkMode) {
+      themeMode = ThemeMode.dark;
+      myservices.sharedpref.setBool('dark', true);
+    } else {
+      themeMode = ThemeMode.light;
+      myservices.sharedpref.setBool('dark', false);
+    }
     super.onInit();
   }
 }

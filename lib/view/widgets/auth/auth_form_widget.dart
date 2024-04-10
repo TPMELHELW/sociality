@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sociality/controller/auth_controller.dart';
 import 'package:sociality/core/function/valid_input.dart';
 import 'package:sociality/view/screen/auth/forget_password.dart';
-import 'package:sociality/view/widgets/auth/textbutton.dart';
+import 'package:sociality/view/widgets/auth/auth_text_button_widget.dart';
 import 'package:sociality/view/widgets/auth/auth_text_field_widget.dart';
 
 class AuthFormWidget extends StatelessWidget {
@@ -71,10 +71,13 @@ class AuthFormWidget extends StatelessWidget {
             label: 'Password',
           ),
           isLogin
-              ? TextButtonAuth(
+              ? AuthTextButton(
                   text: 'Forget Passowrd?',
                   onpress: () {
-                    Get.to(const ForgetPassword());
+                    Get.delete<AuthController>();
+                    Get.to(() => const ForgetPassword(
+                          isReset: false,
+                        ));
                   },
                 )
               : const SizedBox(),

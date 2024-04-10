@@ -20,7 +20,7 @@ class SettingsData {
           'email': email ?? '',
           'location': location ?? '',
           'occupation': occupation ?? '',
-          'password': password ?? '', 
+          'password': password ?? '',
           'firstName': firstName ?? '',
           'lastName': lastName ?? '',
         },

@@ -5,11 +5,11 @@ class EditPostData {
 
   EditPostData(this.crud);
 
-  patchData(postId,desc,token) async {
+  patchData(postId, desc, token) async {
     var responce = await crud.patchRequestHeaders(
-        'https://social-medai-mern-b696.vercel.app/posts/$postId', {
-          'desc' : desc
-        },token);
+        'https://social-medai-mern-b696.vercel.app/posts/$postId',
+        {'desc': desc},
+        token);
 
     return responce.fold((left) => left, (right) => right);
   }

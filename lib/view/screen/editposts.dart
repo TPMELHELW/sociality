@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/controller/editpostcontroller.dart';
 import 'package:sociality/core/class/enum.dart';
-import 'package:sociality/middleware/middleware.dart';
-import 'package:sociality/view/widgets/auth/normalbuttonauth.dart';
+import 'package:sociality/middleware/services.dart';
+import 'package:sociality/view/widgets/auth/auth_button_widget.dart';
 
 class EditPost extends StatelessWidget {
   final Map controllerScroll;
@@ -77,7 +77,7 @@ class EditPost extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              NormalButtonAuth(
+                              AuthButtonWidget(
                                 text: 'Edit Post',
                                 onpress: () async {
                                   await controller

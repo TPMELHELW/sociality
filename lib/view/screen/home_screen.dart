@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sociality/controller/home_screen_controller.dart';
-import 'package:sociality/middleware/middleware.dart';
 import 'package:sociality/view/screen/auth/auth_screen.dart';
-import 'package:sociality/view/widgets/homescreen/describtionformfield.dart';
-import 'package:sociality/view/widgets/homescreen/imagebutton.dart';
+import 'package:sociality/view/widgets/homescreen/description_field_widget.dart';
 import 'package:sociality/view/widgets/homescreen/posts_widget.dart';
 import 'package:sociality/view/widgets/homescreen/sharebutton.dart';
 import 'package:sociality/view/widgets/textappbar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    MyServices myservices = Get.find();
     HomeScreenController controller = Get.put(HomeScreenController());
-
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () async {
-              myservices.sharedpref.clear();
+              controller.myServices.sharedpref.clear();
               await controller.logOut();
               Get.offAll(
                 () => const AuthScreen(
@@ -47,12 +45,13 @@ class HomeScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             decoration: BoxDecoration(
-              color: myservices.sharedpref.getBool('dark') == true
+              color: controller.myServices.sharedpref.getBool('dark') == true
                   ? const Color(0xFF242526)
                   : Colors.white,
               boxShadow: [
                 BoxShadow(
-                    color: myservices.sharedpref.getBool('dark') == false
+                    color: controller.myServices.sharedpref.getBool('dark') ==
+                            false
                         ? const Color(0xFF242526)
                         : Colors.white,
                     spreadRadius: 2,
@@ -74,7 +73,8 @@ class HomeScreen extends StatelessWidget {
                       global: controller.formState,
                       controller: controller.descriptionController,
                       text: "What`s on your mind ..",
-                      color: myservices.sharedpref.getBool('dark') == true
+                      color: controller.myServices.sharedpref.getBool('dark') ==
+                              true
                           ? const Color(0xFF242526)
                           : Colors.white,
                     )
@@ -86,11 +86,18 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const ImageButton(),
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.image),
+                      label: const Text('Images'),
+                    ),
                     ShareButton(
                       onpress: () async {
                         await controller.postData();
-                        Get.offAll(() => const HomeScreen());
+                        Get.delete<HomeScreenController>();
+                        Get.offAll(
+                          () => const HomeScreen(),
+                        );
                       },
                     )
                   ],
@@ -105,12 +112,15 @@ class HomeScreen extends StatelessWidget {
                 animateTransitions: true,
                 itemBuilder: (context, dynamic item, index) {
                   return Posts(
-                    isImage: item['picturePath'] == null ? false : true,
-                    currentId: "${myservices.sharedpref.getString('id')}",
-                    color: myservices.sharedpref.getBool('dark') == true
-                        ? const Color(0xFF242526)
-                        : Colors.white,
-                    item: item,
+                    controller: controller,
+                    isImage: false,
+                    currentId:
+                        "${controller.myServices.sharedpref.getString('id')}",
+                    color:
+                        controller.myServices.sharedpref.getBool('dark') == true
+                            ? const Color(0xFF242526)
+                            : Colors.white,
+                    item: controller.posts[index],
                   ) as Widget;
                 },
               ),

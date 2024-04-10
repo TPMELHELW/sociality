@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sociality/core/class/enum.dart';
 import 'package:sociality/core/function/handlingdata.dart';
 import 'package:sociality/data/editpostdata.dart';
-import 'package:sociality/middleware/middleware.dart';
+import 'package:sociality/middleware/services.dart';
 
 class EditPostController extends GetxController {
   GlobalKey<FormState> formState = GlobalKey();

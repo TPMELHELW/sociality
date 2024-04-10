@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/controller/settingscontroller.dart';
-import 'package:sociality/view/widgets/auth/normalbuttonauth.dart';
+import 'package:sociality/controller/settings_controller.dart';
+import 'package:sociality/view/widgets/auth/auth_button_widget.dart';
 import 'package:sociality/view/widgets/textappbar.dart';
 import 'package:sociality/view/widgets/textformfieldsettings.dart';
 
@@ -72,13 +72,12 @@ class Settings extends StatelessWidget {
                           ),
                         ]),
                   ),
-                  NormalButtonAuth(
+                  AuthButtonWidget(
                     text: 'Update',
                     onpress: () async {
                       await controller0.updateData();
                     },
                   )
-                  // ElevatedButton(onPressed: (){}, child: child)
                 ],
               ),
             );
