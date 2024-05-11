@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/controller/settings_controller.dart';
-import 'package:sociality/middleware/services.dart';
-import 'package:sociality/view/screen/auth/auth_screen.dart';
-import 'package:sociality/view/screen/home_screen.dart';
+import 'package:sociality/features/settings/controller/settings_controller.dart';
+import 'package:sociality/utils/middleware/services.dart';
+import 'package:sociality/features/auth/auth_screen.dart';
+import 'package:sociality/features/posts/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +26,7 @@ class MyApp extends StatelessWidget {
           darkTheme: controller.customDarkTheme,
           home: controller.services.sharedpref.getBool('isLogin') == true
               ? const HomeScreen()
-              : const AuthScreen(
-                  isLogin: true,
-                ),
+              : const AuthScreen(),
         );
       },
     );
