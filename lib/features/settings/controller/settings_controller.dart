@@ -26,11 +26,11 @@ class SettingsController extends GetxController {
 
     if (statusRequest == StatusRequest.success) {
       if (responce['_id'] != null) {
-        myservices.sharedpref.setString("firstname", firstName.text);
-        myservices.sharedpref.setString("lastname", lastName.text);
-        myservices.sharedpref.setString("email", email.text);
-        myservices.sharedpref.setString("location", location.text);
-        myservices.sharedpref.setString("occupation", occupation.text);
+        // myservices.sharedpref.setString("firstname", firstName.text);
+        // myservices.sharedpref.setString("lastname", lastName.text);
+        // myservices.sharedpref.setString("email", email.text);
+        // myservices.sharedpref.setString("location", location.text);
+        // myservices.sharedpref.setString("occupation", occupation.text);
         Get.offAllNamed('/homescreen');
       }
     }
@@ -41,12 +41,12 @@ class SettingsController extends GetxController {
 
   void toggleTheme() {
     if (themeMode == ThemeMode.dark) {
-      services.sharedpref.setBool("dark", false);
+      // services.sharedpref.setBool("dark", false);
 
       themeMode = ThemeMode.light;
       update();
     } else {
-      services.sharedpref.setBool("dark", true);
+      // services.sharedpref.setBool("dark", true);
 
       themeMode = ThemeMode.dark;
     }
@@ -74,22 +74,23 @@ class SettingsController extends GetxController {
     email = TextEditingController();
     occupation = TextEditingController();
     password = TextEditingController();
-    firstName.text = '${myservices.sharedpref.getString("firstname")}';
-    lastName.text = '${myservices.sharedpref.getString("lastname")}';
-    location.text = '${myservices.sharedpref.getString("location")}';
-    occupation.text = '${myservices.sharedpref.getString("occupation")}';
-    email.text = '${myservices.sharedpref.getString("email")}';
-    password.text = '${myservices.sharedpref.getString("password")}';
+    // firstName.text = '${myservices.sharedpref.getString("firstname")}';
+    // lastName.text = '${myservices.sharedpref.getString("lastname")}';
+    // location.text = '${myservices.sharedpref.getString("location")}';
+    // occupation.text = '${myservices.sharedpref.getString("occupation")}';
+    // email.text = '${myservices.sharedpref.getString("email")}';
+    // password.text = '${myservices.sharedpref.getString("password")}';
 
     statusRequest = StatusRequest.none;
-    if (myservices.sharedpref.getBool('dark') == true ||
-        Get.isPlatformDarkMode) {
-      themeMode = ThemeMode.dark;
-      myservices.sharedpref.setBool('dark', true);
-    } else {
-      themeMode = ThemeMode.light;
-      myservices.sharedpref.setBool('dark', false);
-    }
+    // if (myservices.sharedpref.getBool('dark') == true ||
+    //     Get.isPlatformDarkMode) {
+    //   themeMode = ThemeMode.dark;
+    //   myservices.sharedpref.setBool('dark', true);
+    // } else {
+    //   themeMode = ThemeMode.light;
+    //   myservices.sharedpref.setBool('dark', false);
+    // }
+    themeMode = ThemeMode.dark;
     super.onInit();
   }
 }

@@ -44,73 +44,6 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> logIn() async {
-    try {
-      var formData = formState.currentState!;
-      if (formData.validate()) {
-        statusRequest = StatusRequest.loading;
-        update();
-        Map responce = await authData.logInData(email.text, password.text);
-        statusRequest = handlingData(responce);
-        if (statusRequest == StatusRequest.success) {
-          if (responce['user'] != null) {
-            myservices.sharedpref.setBool('isLogin', true);
-            myservices.sharedpref.setString("token", responce['accessToken']);
-            myservices.sharedpref.setString("id", responce['user']['_id']);
-            myservices.sharedpref
-                .setString("firstname", responce['user']['firstName']);
-            myservices.sharedpref
-                .setString("lastname", responce['user']['lastName']);
-            myservices.sharedpref.setString("email", responce['user']['email']);
-            myservices.sharedpref
-                .setString("location", responce['user']['location']);
-            myservices.sharedpref
-                .setString("occupation", responce['user']['occupation']);
-            Get.offAll(() => const HomeScreen());
-          } else {
-            Get.defaultDialog(
-              title: 'ALERT',
-              content: Text(responce['msg']),
-              onConfirm: () => Get.back(),
-            );
-          }
-        } else {
-          statusRequest = StatusRequest.failure;
-          update();
-        }
-      }
-    } catch (e) {
-      statusRequest = StatusRequest.failure;
-      update();
-    }
-    update();
-  }
-
-  Future<void> signup() async {
-    if (formState.currentState!.validate()) {
-      statusRequest = StatusRequest.loading;
-      update();
-      Map responce = await authData.signUpData(firstName.text, lastName.text,
-          email.text, password.text, location.text, occupation.text);
-      statusRequest = handlingData(responce);
-      if (statusRequest == StatusRequest.success) {
-        if (responce['firstName'] != null) {
-          isLogin = true;
-          update();
-        } else {
-          Get.defaultDialog(
-            title: 'ALART',
-            content: Text(responce['msg']),
-            onConfirm: () => Get.back(),
-          );
-        }
-      } else {
-        statusRequest = StatusRequest.serverFailure;
-      }
-    }
-    update();
-  }
-
   Future sendVerifyCode() async {
     if (formState.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
@@ -155,10 +88,10 @@ class AuthController extends GetxController {
     update();
   }
 
-  void onAuthButtonTap() async {
-    isLogin ? await logIn() : await signup();
-    update();
-  }
+  // void onAuthButtonTap() async {
+  //   isLogin ? await logIn() : await signup();
+  //   update();
+  // }
 
   @override
   void onInit() {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sociality/common/widget/text_field_widget.dart';
+import 'package:sociality/core/widget/text_field_widget.dart';
 import 'package:sociality/features/settings/controller/settings_controller.dart';
 import 'package:sociality/features/settings/data/fields_data.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sociality/features/posts/home_screen.dart';
 import 'package:sociality/features/settings/controller/settings_controller.dart';
-import 'package:sociality/common/widget/auth_button_widget.dart';
-import 'package:sociality/common/widget/text_app_bar_widget.dart';
+import 'package:sociality/core/widget/auth_button_widget.dart';
+import 'package:sociality/core/widget/text_app_bar_widget.dart';
 import 'package:sociality/features/settings/data/fields_data.dart';
 import 'package:sociality/features/settings/widget/form_widget.dart';
 

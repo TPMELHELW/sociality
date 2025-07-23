@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sociality/common/widget/auth_button_widget.dart';
+import 'package:sociality/core/widget/auth_button_widget.dart';
 import 'package:sociality/features/auth/controller/auth_controller.dart';
+import 'package:sociality/features/auth/controller/login_controller.dart';
 import 'package:sociality/utils/function/valid_input.dart';
 import 'package:sociality/features/auth/forget_password.dart';
 import 'package:sociality/features/auth/widget/auth_text_button_widget.dart';
-import 'package:sociality/common/widget/text_field_widget.dart';
+import 'package:sociality/core/widget/text_field_widget.dart';
 
 class AuthFormWidget extends StatelessWidget {
   final AuthController controller;
@@ -13,8 +14,9 @@ class AuthFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.put(LoginController());
     return Form(
-      key: controller.formState,
+      key: loginController.formState,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -59,7 +61,7 @@ class AuthFormWidget extends StatelessWidget {
                 )
               : const SizedBox(),
           TextFieldWidget(
-            controller: controller.email,
+            controller: loginController.email,
             label: 'Email',
             validator: (val) => validInput(val!, 1, 40, 'email'),
           ),
@@ -67,7 +69,7 @@ class AuthFormWidget extends StatelessWidget {
             height: 20,
           ),
           TextFieldWidget(
-            controller: controller.password,
+            controller: loginController.password,
             label: 'Password',
           ),
           controller.isLogin
@@ -88,7 +90,8 @@ class AuthFormWidget extends StatelessWidget {
             isAuth: true,
             statusRequest: controller.statusRequest,
             text: controller.isLogin ? 'LogIn' : 'SignUp',
-            onpress: () => controller.onAuthButtonTap(),
+            onpress: () => loginController.logIn(),
+            // onpress: () => controller.onAuthButtonTap(),
           ),
         ],
       ),

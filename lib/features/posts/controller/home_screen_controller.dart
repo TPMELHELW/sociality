@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
+import 'package:sociality/features/auth/screens/login_screen/login_screen.dart';
 import 'package:sociality/utils/class/crud.dart';
 import 'package:sociality/utils/class/enum.dart';
 import 'package:sociality/utils/function/handlingdata.dart';
 import 'package:sociality/utils/data/home_screen_data.dart';
 import 'package:sociality/utils/middleware/services.dart';
-import 'package:sociality/features/auth/auth_screen.dart';
 
 class HomeScreenController extends GetxController {
   bool isProfile = false;
@@ -59,18 +59,18 @@ class HomeScreenController extends GetxController {
   Future getData() async {
     try {
       print('getData');
-      statusRequest = StatusRequest.loading;
-      Map responce = await homeScreenData.profileData(
-          myServices.sharedpref.getString('profileUserId'), currentPage);
-      statusRequest = handlingData(responce);
-      if (statusRequest == StatusRequest.success) {
-        if (responce['posts'] != null) {
-          hasMore = responce['hasMore'];
-          print(responce['posts']);
-          profilePosts.addAll(responce['posts']);
-          return responce['posts'];
-        } else {}
-      } else {}
+      // statusRequest = StatusRequest.loading;
+      // Map responce = await homeScreenData.profileData(
+      //     myServices.sharedpref.getString('profileUserId'), currentPage);
+      // statusRequest = handlingData(responce);
+      // if (statusRequest == StatusRequest.success) {
+      //   if (responce['posts'] != null) {
+      //     hasMore = responce['hasMore'];
+      //     print(responce['posts']);
+      //     profilePosts.addAll(responce['posts']);
+      //     return responce['posts'];
+      //   } else {}
+      // } else {}
     } catch (e) {}
     update();
   }
@@ -138,19 +138,19 @@ class HomeScreenController extends GetxController {
   Future<void> logOut() async {
     statusRequest = StatusRequest.loading;
     update();
-    myServices.sharedpref.clear();
+    // myServices.sharedpref.clear();
     await homeScreenData.logOutData();
 
     Get.delete<HomeScreenController>();
     Get.off(
-      () => const AuthScreen(),
+      () => const LoginScreen(),
     );
     update();
   }
 
   void onProfileTap(Map item) {
-    myServices.sharedpref
-        .setString('profileUserId', '${item['userId']['_id']}');
+    // myServices.sharedpref
+    //     .setString('profileUserId', '${item['userId']['_id']}');
     currentPage = 1;
     profilePosts.clear();
     isProfile = true;

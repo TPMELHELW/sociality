@@ -8,10 +8,8 @@ import 'package:sociality/utils/middleware/services.dart';
 
 class Crud {
   MyServices myServices = Get.find<MyServices>();
-
-  // Crud(this.myServices);
-  Map<String, String>? get token =>
-      {'Authorization': 'Bearer ${myServices.sharedpref.getString('token')}'};
+// ${myServices.sharedpref.getString('token')}
+  Map<String, String>? get token => {'Authorization': 'Bearer '};
   Future<Either<StatusRequest, Map>> postRequest(uri, body) async {
     try {
       if (await checkInternet()) {

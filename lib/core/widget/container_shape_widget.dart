@@ -12,9 +12,9 @@ class ContainerShapeWidget extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: myServices.sharedpref.getBool('dark') == true
-                ? const Color(0xFF242526)
-                : Colors.white,
+            // color: myServices.sharedpref.getBool('dark') == true
+            //     ? const Color(0xFF242526)
+            //     : Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(

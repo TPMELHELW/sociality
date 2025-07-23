@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sociality/core/widget/auth_button_widget.dart';
+import 'package:sociality/features/auth/controller/login_controller.dart';
+import 'package:sociality/features/auth/forget_password.dart';
+import 'package:sociality/features/auth/widget/auth_text_button_widget.dart';
+import 'package:sociality/utils/function/valid_input.dart';
+import 'package:sociality/core/widget/text_field_widget.dart';
+
+class LoginFormWidget extends StatelessWidget {
+  const LoginFormWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final LoginController controller = Get.put(LoginController());
+    return Form(
+      key: controller.formState,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextFieldWidget(
+            controller: controller.email,
+            label: 'Email',
+            validator: (val) => validInput(val!, 1, 40, 'email'),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFieldWidget(
+            controller: controller.password,
+            label: 'Password',
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          AuthTextButton(
+            text: 'Forget Passowrd?',
+            onpress: () {
+              // Get.delete<AuthController>();
+              Get.to(() => const ForgetPassword(
+                    isReset: false,
+                  ));
+            },
+          ),
+          ButtonWidget(
+            isAuth: true,
+            statusRequest: controller.statusRequest,
+            text: 'LogIn',
+            onpress: () => controller.logIn(),
+          ),
+        ],
+      ),
+    );
+  }
+}

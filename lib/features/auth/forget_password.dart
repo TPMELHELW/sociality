@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:sociality/features/auth/controller/auth_controller.dart';
 import 'package:sociality/utils/function/valid_input.dart';
 import 'package:sociality/utils/middleware/services.dart';
-import 'package:sociality/common/widget/auth_button_widget.dart';
-import 'package:sociality/common/widget/text_field_widget.dart';
+import 'package:sociality/core/widget/auth_button_widget.dart';
+import 'package:sociality/core/widget/text_field_widget.dart';
 
 class ForgetPassword extends StatelessWidget {
   final bool isReset;
@@ -38,9 +38,9 @@ class ForgetPassword extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: myServices.sharedpref.getBool('dark') == true
-                    ? const Color(0xFF242526)
-                    : Colors.white,
+                // color: myServices.sharedpref.getBool('dark') == true
+                //     ? const Color(0xFF242526)
+                //     : Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: const [
                   BoxShadow(

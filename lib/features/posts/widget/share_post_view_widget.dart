@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sociality/common/widget/auth_button_widget.dart';
-import 'package:sociality/common/widget/container_shape_widget.dart';
+import 'package:sociality/core/widget/auth_button_widget.dart';
+import 'package:sociality/core/widget/container_shape_widget.dart';
 import 'package:sociality/features/posts/controller/home_screen_controller.dart';
 import 'package:sociality/features/posts/widget/description_field_widget.dart';
 
@@ -24,10 +24,10 @@ class SharePostViewWidget extends StatelessWidget {
               DescribtionField(
                 global: controller.formState,
                 controller: controller.descriptionController,
-                text: "What`s on your mind ..",
-                color: controller.myServices.sharedpref.getBool('dark') == true
-                    ? const Color(0xFF242526)
-                    : Colors.white,
+                text: "What`s on your mind ..", color: Colors.black,
+                // color: controller.myServices.sharedpref.getBool('dark') == true
+                //     ? const Color(0xFF242526)
+                //     : Colors.white,
               )
             ],
           ),
