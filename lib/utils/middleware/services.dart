@@ -4,13 +4,23 @@ import 'package:sociality/core/services/user_services.dart';
 
 class MyServices extends GetxService {
   Future<MyServices> init() async {
-    Get.put(SharedPreferencesService());
+    // Register SharedPreferencesService asynchronously if needed
+    Get.put<SharedPreferencesService>(SharedPreferencesService(),
+        permanent: true);
 
-    await Get.putAsync(() => UserService().init());
+    // Register UserService asynchronously
+    await Get.putAsync<UserService>(() => UserService().init(),
+        permanent: true);
+
     return this;
   }
 }
 
-Future<void> initial() async {
-  await Get.putAsync(() => MyServices().init());
+Future<void> initServices() async {
+  try {
+    await Get.putAsync<MyServices>(() => MyServices().init(), permanent: true);
+  } catch (e) {
+    // You can use a logger here
+    print('Service initialization failed: $e');
+  }
 }

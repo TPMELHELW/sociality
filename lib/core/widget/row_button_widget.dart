@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sociality/features/auth/widget/auth_text_button_widget.dart';
+import 'package:sociality/core/widget/auth_text_button_widget.dart';
 
 class RowButtonWidget extends StatelessWidget {
   final String text, buttonText;

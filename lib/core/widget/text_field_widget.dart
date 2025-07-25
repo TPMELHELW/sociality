@@ -19,8 +19,11 @@ class TextFieldWidget extends StatelessWidget {
       onChanged: onchanged,
       controller: controller,
       decoration: InputDecoration(
-        labelText: label,
+        hintText: label,
+        filled: true,
+        fillColor: Colors.grey[600],
         border: OutlineInputBorder(
+          borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
         ),
       ),

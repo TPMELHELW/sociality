@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:sociality/features/posts/controller/home_screen_controller.dart';
+import 'package:sociality/utils/model/menuitem.dart';
+import 'package:sociality/utils/model/menuitems.dart';
+
+class HeaderPostWidget extends StatelessWidget {
+  final Map item;
+  final int index;
+  HeaderPostWidget({super.key, required this.item, required this.index});
+
+  final HomeScreenController controller = HomeScreenController.to;
+  @override
+  Widget build(BuildContext context) {
+    final currentId = controller.myServices.currentUser.value?.user?.sId ?? '';
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: GestureDetector(
+            onTap: () => controller.onProfileTap(item),
+            child: CircleAvatar(
+              maxRadius: 25,
+              backgroundImage: NetworkImage('${item['userId']['picturePath']}'),
+              onBackgroundImageError: (exception, stackTrace) =>
+                  print('gfdsdf'),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: GestureDetector(
+            onTap: () => controller.onProfileTap(item),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${item['userId']['firstName']}',
+                    style: const TextStyle(
+                        fontSize: 18.5, fontWeight: FontWeight.bold)),
+                Text(
+                  controller.postTime(item),
+                )
+              ],
+            ),
+          ),
+        ),
+        '${item['userId']['_id']}' == currentId
+            ? PopupMenuButton<MenuItem>(
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  ...MenuItems.items.map(buildItems).toList(),
+                ],
+              )
+            : IconButton(
+                onPressed: () async => await controller.homeScreenData
+                    .addFriend(currentId, '${item['userId']['_id']}'),
+                icon: const Icon(Icons.add))
+      ],
+    );
+  }
+
+  void onSelected(BuildContext contex, MenuItem items) {
+    if (items == MenuItems.itemDelete) {
+      controller.deletedata(item, index);
+    } else if (items == MenuItems.itemEdit) {
+      controller.onEditTap(item);
+    }
+  }
+
+  PopupMenuItem<MenuItem> buildItems(MenuItem item) => PopupMenuItem<MenuItem>(
+        value: item,
+        child: Row(
+          children: [
+            Icon(item.icon),
+            Text(
+              item.text,
+            ),
+          ],
+        ),
+      );
+}

@@ -2,14 +2,16 @@ import 'dart:convert';
 import 'package:either_dart/either.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:sociality/core/services/user_services.dart';
 import 'package:sociality/utils/class/enum.dart';
 import 'package:sociality/utils/function/checkinterner.dart';
-import 'package:sociality/utils/middleware/services.dart';
 
 class Crud {
-  MyServices myServices = Get.find<MyServices>();
-// ${myServices.sharedpref.getString('token')}
-  Map<String, String>? get token => {'Authorization': 'Bearer '};
+  final UserService _userServices = Get.find<UserService>();
+  Map<String, String>? get token => {
+        'Authorization':
+            'Bearer ${_userServices.currentUser.value?.accessToken}'
+      };
   Future<Either<StatusRequest, Map>> postRequest(uri, body) async {
     try {
       if (await checkInternet()) {

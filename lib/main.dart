@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/routes/app_pages.dart';
+import 'package:sociality/core/theme/theme_data.dart';
 import 'package:sociality/features/auth/screens/login_screen/login_screen.dart';
-import 'package:sociality/features/settings/controller/settings_controller.dart';
+import 'package:sociality/features/posts/home_screen.dart';
 import 'package:sociality/utils/middleware/services.dart';
-import 'package:sociality/features/auth/auth_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initial();
+  await initServices();
   runApp(const MyApp());
 }
 
@@ -16,17 +17,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SettingsController>(
-      init: SettingsController(),
-      builder: (controller) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          themeMode: controller.themeMode,
-          theme: controller.customLightTheme,
-          darkTheme: controller.customDarkTheme,
-          home: const LoginScreen(),
-        );
-      },
+    return GetMaterialApp(
+      getPages: AppPages().routes,
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
+      theme: AppTheme.customLightTheme,
+      darkTheme: AppTheme.customDarkTheme,
+      home: const HomeScreen(),
     );
   }
 }

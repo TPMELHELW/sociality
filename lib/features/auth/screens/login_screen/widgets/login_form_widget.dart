@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/routes/app_routes.dart';
 import 'package:sociality/core/widget/auth_button_widget.dart';
 import 'package:sociality/features/auth/controller/login_controller.dart';
-import 'package:sociality/features/auth/forget_password.dart';
-import 'package:sociality/features/auth/widget/auth_text_button_widget.dart';
+import 'package:sociality/core/widget/auth_text_button_widget.dart';
 import 'package:sociality/utils/function/valid_input.dart';
 import 'package:sociality/core/widget/text_field_widget.dart';
 
@@ -12,7 +12,7 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LoginController controller = Get.put(LoginController());
+    final LoginController controller = LoginController.instance;
     return Form(
       key: controller.formState,
       child: Column(
@@ -34,14 +34,8 @@ class LoginFormWidget extends StatelessWidget {
             height: 10,
           ),
           AuthTextButton(
-            text: 'Forget Passowrd?',
-            onpress: () {
-              // Get.delete<AuthController>();
-              Get.to(() => const ForgetPassword(
-                    isReset: false,
-                  ));
-            },
-          ),
+              text: 'Forget Passowrd?',
+              onpress: () => Get.toNamed(AppRoutes.forgetPasswordScreen)),
           ButtonWidget(
             isAuth: true,
             statusRequest: controller.statusRequest,

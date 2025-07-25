@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
+import 'package:sociality/core/services/user_services.dart';
 import 'package:sociality/features/auth/screens/login_screen/login_screen.dart';
 import 'package:sociality/utils/class/crud.dart';
 import 'package:sociality/utils/class/enum.dart';
 import 'package:sociality/utils/function/handlingdata.dart';
 import 'package:sociality/utils/data/home_screen_data.dart';
-import 'package:sociality/utils/middleware/services.dart';
 
 class HomeScreenController extends GetxController {
+  static HomeScreenController get to => Get.find<HomeScreenController>();
+
   bool isProfile = false;
   late StatusRequest statusRequest;
-  late MyServices myServices;
+  final UserService myServices = Get.find<UserService>();
   bool isEditPost = false;
   final PagingController pagingController = PagingController(firstPageKey: 0);
   HomeScreenData homeScreenData = HomeScreenData(Crud());
@@ -59,58 +61,95 @@ class HomeScreenController extends GetxController {
   Future getData() async {
     try {
       print('getData');
-      // statusRequest = StatusRequest.loading;
-      // Map responce = await homeScreenData.profileData(
-      //     myServices.sharedpref.getString('profileUserId'), currentPage);
-      // statusRequest = handlingData(responce);
-      // if (statusRequest == StatusRequest.success) {
-      //   if (responce['posts'] != null) {
-      //     hasMore = responce['hasMore'];
-      //     print(responce['posts']);
-      //     profilePosts.addAll(responce['posts']);
-      //     return responce['posts'];
-      //   } else {}
-      // } else {}
+      statusRequest = StatusRequest.loading;
+      Map responce = await homeScreenData.profileData(
+          myServices.currentUser.value?.user?.sId ?? '', currentPage);
+      statusRequest = handlingData(responce);
+      if (statusRequest == StatusRequest.success) {
+        if (responce['posts'] != null) {
+          hasMore = responce['hasMore'];
+          print(responce['posts']);
+          profilePosts.addAll(responce['posts']);
+          return responce['posts'];
+        } else {}
+      } else {}
     } catch (e) {}
     update();
   }
 
-  Future fetchData() async {
-    statusRequest = StatusRequest.loading;
+  // Future<List<dynamic>> fetchData() async {
+  //   try {
+  //     statusRequest = StatusRequest.loading;
+  //     update();
 
-    Map responce = await homeScreenData.getPostsData(currentPage);
-    statusRequest = handlingData(responce);
-    if (statusRequest == StatusRequest.success) {
-      if (responce['posts'] != null) {
-        hasMore = responce['hasMore'];
-        posts.addAll(responce['posts']);
-        return responce['posts'];
-      } else if (responce['msg'] == "Token is not valid!") {
-      } else {
-        statusRequest = StatusRequest.failure;
-        update();
-      }
-    } else {
-      statusRequest = StatusRequest.serverFailure;
-      update();
-    }
+  //     Map response = await homeScreenData.getPostsData(currentPage);
+  //     statusRequest = handlingData(response);
 
-    update();
-  }
+  //     if (statusRequest == StatusRequest.success) {
+  //       if (response['posts'] != null) {
+  //         hasMore = response['hasMore'];
+  //         posts.addAll(response['posts']);
+  //         update();
+  //         return response['posts'];
+  //       } else {
+  //         statusRequest = StatusRequest.failure;
+  //         update();
+  //         return [];
+  //       }
+  //     } else {
+  //       statusRequest = StatusRequest.failure;
+  //       update();
+  //       return [];
+  //     }
+  //   } catch (e) {
+  //     statusRequest = StatusRequest.failure;
+  //     showAlertDialog(e.toString());
+  //     update();
+  //     return [];
+  //   }
+  // }
 
-  Future<void> fetchNewPage() async {
+  Future<void> getPosts(int pageKey) async {
     try {
-      final newItems = isProfile ? await getData() : await fetchData();
-      if (hasMore) {
-        pagingController.appendPage(newItems, currentPage++);
+      statusRequest = StatusRequest.loading;
+      update();
+
+      Map response = await homeScreenData.getPostsData(pageKey);
+      statusRequest = handlingData(response);
+
+      if (statusRequest == StatusRequest.success && response['posts'] != null) {
+        final newItems = response['posts'] as List;
+        final isLastPage = !(response['hasMore'] ?? false);
+
+        if (isLastPage) {
+          pagingController.appendLastPage(newItems);
+        } else {
+          final nextPageKey = pageKey + 1;
+          pagingController.appendPage(newItems, nextPageKey);
+        }
+        // posts.addAll(newItems); // Keep your posts list updated if needed
+        hasMore = !isLastPage;
       } else {
-        pagingController.appendLastPage(newItems);
+        pagingController.appendLastPage([]);
       }
     } catch (e) {
       pagingController.error = e;
-      print(e);
     }
+    update();
   }
+
+  // Future<void> fetchNewPage() async {
+  //   try {
+  //     final newItems = await fetchData();
+  //     if (hasMore) {
+  //       pagingController.appendPage(newItems, currentPage++);
+  //     } else {
+  //       pagingController.appendLastPage(newItems);
+  //     }
+  //   } catch (e) {
+  //     pagingController.error = e;
+  //   }
+  // }
 
   Future<void> sharePost() async {
     if (formState.currentState!.validate()) {
@@ -226,9 +265,8 @@ class HomeScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    myServices = Get.find<MyServices>();
     pagingController.addPageRequestListener((page) {
-      fetchNewPage();
+      getPosts(page);
     });
     descriptionController = TextEditingController();
     statusRequest = StatusRequest.none;

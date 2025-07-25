@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/core/functions/show_dialog.dart';
 import 'package:sociality/core/services/shared_preferences_services.dart';
 import 'package:sociality/core/services/user_services.dart';
 import 'package:sociality/features/posts/home_screen.dart';
@@ -38,24 +39,16 @@ class LoginController extends GetxController {
           sharedPreferencesService.setBool('isLogin', true);
           Get.offAll(() => const HomeScreen());
         } else {
-          _showAlertDialog(response['msg']);
+          showAlertDialog(response['msg']);
         }
       } else {
         statusRequest = StatusRequest.failure;
       }
     } catch (e) {
       statusRequest = StatusRequest.failure;
-      _showAlertDialog('An error occurred. Please try again.');
+      showAlertDialog('An error occurred. Please try again.');
     }
     update();
-  }
-
-  void _showAlertDialog(String message) {
-    Get.defaultDialog(
-      title: 'ALERT',
-      content: Text(message),
-      onConfirm: () => Get.back(),
-    );
   }
 
   @override

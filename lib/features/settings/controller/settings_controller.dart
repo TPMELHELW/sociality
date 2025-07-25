@@ -53,19 +53,6 @@ class SettingsController extends GetxController {
     update();
   }
 
-  ThemeData customDarkTheme = ThemeData.dark().copyWith(
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-    ),
-    scaffoldBackgroundColor: const Color(0xFF0a0a0a),
-  );
-  ThemeData customLightTheme = ThemeData.light().copyWith(
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-    ),
-    scaffoldBackgroundColor: const Color(0xFFf6f6f6),
-  );
-
   @override
   void onInit() {
     firstName = TextEditingController();

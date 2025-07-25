@@ -5,11 +5,13 @@ import 'package:sociality/features/posts/controller/home_screen_controller.dart'
 import 'package:sociality/features/posts/widget/description_field_widget.dart';
 
 class SharePostViewWidget extends StatelessWidget {
-  final HomeScreenController controller;
-  const SharePostViewWidget({super.key, required this.controller});
+  const SharePostViewWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final HomeScreenController controller = HomeScreenController.to;
     return ContainerShapeWidget(
       child: Column(
         children: [
