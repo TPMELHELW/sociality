@@ -32,11 +32,6 @@ class SharePostViewWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.image),
-                label: const Text('Images'),
-              ),
               ButtonWidget(
                 statusRequest: controller.statusRequest,
                 onpress: () async => controller.isEditPost

@@ -18,7 +18,7 @@ class PostViewWidget extends StatelessWidget {
       builderDelegate: PagedChildBuilderDelegate(
         itemBuilder: (context, dynamic item, index) {
           return Posts(
-            isImage: false,
+            isImage: item['picturePath'] != null && item['picturePath'] != '',
             item: item,
             index: index,
           ) as Widget;

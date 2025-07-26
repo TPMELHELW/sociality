@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sociality/features/posts/controller/home_screen_controller.dart';
 import 'package:sociality/utils/model/menuitem.dart';
 import 'package:sociality/utils/model/menuitems.dart';
@@ -50,10 +51,24 @@ class HeaderPostWidget extends StatelessWidget {
                   ...MenuItems.items.map(buildItems).toList(),
                 ],
               )
-            : IconButton(
-                onPressed: () async => await controller.homeScreenData
-                    .addFriend(currentId, '${item['userId']['_id']}'),
-                icon: const Icon(Icons.add))
+            : GetBuilder<HomeScreenController>(
+                builder: (controller) {
+                  final friends =
+                      controller.myServices.currentUser.value?.user?.friends ??
+                          [];
+                  final isFriend = friends.contains(item['userId']['_id']);
+                  return IconButton(
+                    onPressed: isFriend
+                        ? null
+                        : () async => await controller.addFriend(
+                            currentId, item['userId']['_id']),
+                    icon: Icon(
+                      isFriend ? Icons.check : Icons.add,
+                      color: isFriend ? Colors.green : null,
+                    ),
+                  );
+                },
+              )
       ],
     );
   }

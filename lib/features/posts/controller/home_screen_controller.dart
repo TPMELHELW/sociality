@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -26,6 +28,37 @@ class HomeScreenController extends GetxController {
   GlobalKey<FormState> formState = GlobalKey();
   bool hasMore = true;
   late TextEditingController descriptionController;
+
+  Future<void> addFriend(String currentUserId, String friendUserId) async {
+    try {
+      statusRequest = StatusRequest.loading;
+      update();
+
+      final response =
+          await homeScreenData.addFriend(currentUserId, friendUserId);
+      statusRequest = handlingData(response);
+      if (statusRequest == StatusRequest.success) {
+        if (response != null) {
+          myServices.currentUser.value?.user?.friends!.add(friendUserId);
+          sharedPreferencesService.setString(
+              'user_data', json.encode(myServices.currentUser.value?.toJson()));
+        }
+        Get.snackbar('Success', 'Added friend successfully',
+            snackPosition: SnackPosition.BOTTOM);
+        update();
+      } else {
+        Get.defaultDialog(
+          title: 'ALERT',
+          content: Text(response['msg'] ?? 'Failed to add friend'),
+          onConfirm: () => Get.back(),
+        );
+        update();
+      }
+    } catch (e) {
+      showAlertDialog(e.toString());
+      update();
+    }
+  }
 
   void onProfileTap(String value) async {
     await sharedPreferencesService.setString('user_profile_id', value);
@@ -71,7 +104,6 @@ class HomeScreenController extends GetxController {
       statusRequest = handlingData(response);
 
       if (statusRequest == StatusRequest.success && response['posts'] != null) {
-        print(response['posts']);
         final newItems = response['posts'] as List;
         final isLastPage = !(response['hasMore'] ?? false);
 
