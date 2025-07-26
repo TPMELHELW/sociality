@@ -15,12 +15,9 @@ class PostViewWidget extends StatelessWidget {
         child: PagedListView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       pagingController: controller.pagingController,
-      // itemExtent: 500,
       builderDelegate: PagedChildBuilderDelegate(
-        animateTransitions: true,
         itemBuilder: (context, dynamic item, index) {
           return Posts(
-            controller: controller,
             isImage: false,
             item: item,
             index: index,

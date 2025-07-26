@@ -33,7 +33,6 @@ class Settings extends StatelessWidget {
                 onpress: () async {
                   await controller0.updateData();
                 },
-                isAuth: false,
                 statusRequest: controller.statusRequest,
               )
             ],

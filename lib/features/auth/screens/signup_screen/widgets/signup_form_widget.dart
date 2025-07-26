@@ -70,7 +70,6 @@ class SignupFormWidget extends StatelessWidget {
             height: 10,
           ),
           ButtonWidget(
-            isAuth: true,
             statusRequest: controller.statusRequest,
             text: 'SignUp',
             onpress: () => controller.signup(),

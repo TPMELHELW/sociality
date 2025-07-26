@@ -15,22 +15,15 @@ class SharePostViewWidget extends StatelessWidget {
     return ContainerShapeWidget(
       child: Column(
         children: [
-          Row(
+          const Row(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 1,
                 child: CircleAvatar(
                   maxRadius: 25,
                 ),
               ),
-              DescribtionField(
-                global: controller.formState,
-                controller: controller.descriptionController,
-                text: "What`s on your mind ..", color: Colors.black,
-                // color: controller.myServices.sharedpref.getBool('dark') == true
-                //     ? const Color(0xFF242526)
-                //     : Colors.white,
-              )
+              DescribtionField()
             ],
           ),
           const Divider(
@@ -45,7 +38,6 @@ class SharePostViewWidget extends StatelessWidget {
                 label: const Text('Images'),
               ),
               ButtonWidget(
-                isAuth: false,
                 statusRequest: controller.statusRequest,
                 onpress: () async => controller.isEditPost
                     ? await controller.editPost()

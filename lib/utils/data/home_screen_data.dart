@@ -35,6 +35,7 @@ class HomeScreenData {
 
   Future profileData(userId, page) async {
     var responce = await crud.getRequestHeaders('$posts/$userId?page=$page');
+    // print('profileData: $responce');
     return responce.fold((left) => left, (right) => right);
   }
 

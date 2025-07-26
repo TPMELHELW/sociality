@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sociality/features/posts/controller/home_screen_controller.dart';
 
 class DescribtionField extends StatelessWidget {
-  final Key? global;
-  final TextEditingController controller;
-  final String text;
-  final Color color;
   const DescribtionField({
     super.key,
-    this.global,
-    required this.controller,
-    required this.text,
-    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+    final HomeScreenController controller = HomeScreenController.to;
     return Expanded(
       flex: 3,
       child: Form(
-        key: global,
+        key: controller.formState,
         child: TextFormField(
-          controller: controller,
+          controller: controller.descriptionController,
           decoration: InputDecoration(
-            hintText: text,
-            fillColor: color,
+            hintText: "What`s on your mind ..",
+            fillColor: Colors.black,
             filled: true,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
         ),

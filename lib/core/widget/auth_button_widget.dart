@@ -4,13 +4,13 @@ import 'package:sociality/utils/class/enum.dart';
 class ButtonWidget extends StatelessWidget {
   final void Function()? onpress;
   final String text;
-  final bool isAuth;
+  // final bool isAuth;
   final StatusRequest statusRequest;
   const ButtonWidget(
       {super.key,
       this.onpress,
       required this.text,
-      required this.isAuth,
+      // required this.isAuth,
       required this.statusRequest});
 
   @override

@@ -17,7 +17,7 @@ class HeaderPostWidget extends StatelessWidget {
         Expanded(
           flex: 1,
           child: GestureDetector(
-            onTap: () => controller.onProfileTap(item),
+            onTap: () => controller.onProfileTap('${item['userId']['_id']}'),
             child: CircleAvatar(
               maxRadius: 25,
               backgroundImage: NetworkImage('${item['userId']['picturePath']}'),
@@ -29,7 +29,7 @@ class HeaderPostWidget extends StatelessWidget {
         Expanded(
           flex: 3,
           child: GestureDetector(
-            onTap: () => controller.onProfileTap(item),
+            onTap: () => controller.onProfileTap('${item['userId']['_id']}'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,7 +60,7 @@ class HeaderPostWidget extends StatelessWidget {
 
   void onSelected(BuildContext contex, MenuItem items) {
     if (items == MenuItems.itemDelete) {
-      controller.deletedata(item, index);
+      controller.deletePost(item['_id']);
     } else if (items == MenuItems.itemEdit) {
       controller.onEditTap(item);
     }

@@ -17,7 +17,7 @@ class FooterPostWidget extends StatelessWidget {
         Row(
           children: [
             IconButton(
-              onPressed: () async => await controller.like(item),
+              onPressed: () async => await controller.likePost(item['_id']),
               icon: Icon(
                 item['likes'][currentId] != null
                     ? CupertinoIcons.heart_fill

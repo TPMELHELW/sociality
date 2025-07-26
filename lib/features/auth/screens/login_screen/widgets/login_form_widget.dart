@@ -37,7 +37,6 @@ class LoginFormWidget extends StatelessWidget {
               text: 'Forget Passowrd?',
               onpress: () => Get.toNamed(AppRoutes.forgetPasswordScreen)),
           ButtonWidget(
-            isAuth: true,
             statusRequest: controller.statusRequest,
             text: 'LogIn',
             onpress: () => controller.logIn(),

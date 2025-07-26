@@ -4,6 +4,7 @@ import 'package:sociality/features/auth/screens/forget_password_screen/forget_pa
 import 'package:sociality/features/auth/screens/login_screen/login_screen.dart';
 import 'package:sociality/features/auth/screens/signup_screen/signup_screen.dart';
 import 'package:sociality/features/posts/home_screen.dart';
+import 'package:sociality/features/profile/screens/profile_screen.dart';
 
 class AppPages {
   List<GetPage> routes = [
@@ -30,6 +31,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.resetPasswordScreen,
       page: () => const ForgetPassword(isReset: true),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.profileScreen,
+      page: () => const ProfileScreen(),
       transition: Transition.cupertino,
     ),
   ];

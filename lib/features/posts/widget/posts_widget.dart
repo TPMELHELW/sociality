@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sociality/core/widget/container_shape_widget.dart';
-import 'package:sociality/features/posts/controller/home_screen_controller.dart';
 import 'package:sociality/features/posts/widget/footer_post_widget.dart';
 import 'package:sociality/features/posts/widget/header_post_widget.dart';
 
 class Posts extends StatelessWidget {
   final bool isImage;
   final Map item;
-  final HomeScreenController controller;
   final int index;
   const Posts({
     super.key,
     required this.isImage,
     required this.item,
-    required this.controller,
     required this.index,
   });
 

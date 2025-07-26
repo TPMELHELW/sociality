@@ -57,7 +57,6 @@ class ForgetFormWidget extends StatelessWidget {
                 ? await controller.resetPassword()
                 : await controller.sendVerifyCode();
           },
-          isAuth: true,
           statusRequest: controller.statusRequest,
         )
       ],
