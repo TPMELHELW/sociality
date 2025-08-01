@@ -46,7 +46,7 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       statusRequest = StatusRequest.failure;
-      showAlertDialog('An error occurred. Please try again.');
+      showAlertDialog('An error occurred. Please try again : ${e.toString()}');
     }
     update();
   }

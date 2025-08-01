@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sociality/features/posts/controller/home_screen_controller.dart';
 
 void onCommentPress(item) {
+  final HomeScreenController controller = HomeScreenController.to;
   Get.bottomSheet(
     Container(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          color: Colors.white),
+          color: Color(0xFF242526)),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                const Expanded(flex: 1, child: CircleAvatar()),
-                Expanded(
-                  flex: 3,
-                  child: Form(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Write Your Comment  ',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF0a0a0a),
+                  borderRadius: BorderRadius.circular(15)),
+              child: Row(
+                children: [
+                  const Expanded(flex: 1, child: CircleAvatar()),
+                  Expanded(
+                    flex: 3,
+                    child: Form(
+                      child: TextFormField(
+                        controller: controller.commentController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: const Color(0xFF242526),
+                          labelText: 'Write Your Comment  ',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(40, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text('Comment'),
-                )
-              ],
+                  IconButton(
+                      onPressed: () {
+                        controller.makeComment(
+                            controller.commentController.text, item['_id']);
+                      },
+                      icon: const Icon(Icons.send)),
+                ],
+              ),
             ),
             ListView.separated(
+              padding: const EdgeInsets.all(10),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: item['comments'].length,

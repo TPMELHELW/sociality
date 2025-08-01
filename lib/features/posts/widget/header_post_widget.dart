@@ -59,7 +59,8 @@ class HeaderPostWidget extends StatelessWidget {
                   final isFriend = friends.contains(item['userId']['_id']);
                   return IconButton(
                     onPressed: isFriend
-                        ? null
+                        ? () async => await controller.removeFriend(
+                            currentId, item['userId']['_id'])
                         : () async => await controller.addFriend(
                             currentId, item['userId']['_id']),
                     icon: Icon(

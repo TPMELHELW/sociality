@@ -28,6 +28,7 @@ class HomeScreenController extends GetxController {
   GlobalKey<FormState> formState = GlobalKey();
   bool hasMore = true;
   late TextEditingController descriptionController;
+  late TextEditingController commentController;
 
   Future<void> addFriend(String currentUserId, String friendUserId) async {
     try {
@@ -50,6 +51,37 @@ class HomeScreenController extends GetxController {
         Get.defaultDialog(
           title: 'ALERT',
           content: Text(response['msg'] ?? 'Failed to add friend'),
+          onConfirm: () => Get.back(),
+        );
+        update();
+      }
+    } catch (e) {
+      showAlertDialog(e.toString());
+      update();
+    }
+  }
+
+  Future<void> removeFriend(String currentUserId, String friendUserId) async {
+    try {
+      statusRequest = StatusRequest.loading;
+      update();
+
+      final response =
+          await homeScreenData.addFriend(currentUserId, friendUserId);
+      statusRequest = handlingData(response);
+      if (statusRequest == StatusRequest.success) {
+        if (response != null) {
+          myServices.currentUser.value?.user?.friends!.remove(friendUserId);
+          sharedPreferencesService.setString(
+              'user_data', json.encode(myServices.currentUser.value?.toJson()));
+        }
+        Get.snackbar('Success', 'Removed friend successfully',
+            snackPosition: SnackPosition.BOTTOM);
+        update();
+      } else {
+        Get.defaultDialog(
+          title: 'ALERT',
+          content: Text(response['msg'] ?? 'Failed to remove friend'),
           onConfirm: () => Get.back(),
         );
         update();
@@ -160,13 +192,15 @@ class HomeScreenController extends GetxController {
   Future<void> logOut() async {
     statusRequest = StatusRequest.loading;
     update();
+    myServices.currentUser.value = null;
+    final pref = await sharedPreferencesService.prefs;
+    pref.remove('user_data');
+    // await sharedPreferencesService.clear();
     // myServices.sharedpref.clear();
     await homeScreenData.logOutData();
 
     Get.delete<HomeScreenController>();
-    Get.off(
-      () => const LoginScreen(),
-    );
+    Get.offAllNamed(AppRoutes.loginScreen);
     update();
   }
 
@@ -259,6 +293,40 @@ class HomeScreenController extends GetxController {
     }
   }
 
+  Future<void> makeComment(String comment, String friendId) async {
+    try {
+      statusRequest = StatusRequest.loading;
+      update();
+
+      final responce = await homeScreenData.makeComment(comment, friendId);
+      statusRequest = handlingData(responce);
+
+      if (statusRequest == StatusRequest.success) {
+        final items = pagingController.itemList;
+        if (items != null) {
+          final index = items.indexWhere((post) => post['_id'] == friendId);
+          if (index != -1) {
+            items[index]['comments'] = responce['comments'];
+            pagingController.itemList = List.from(items);
+            commentController.clear();
+            pagingController.notifyListeners();
+          }
+        }
+        update();
+      } else {
+        Get.defaultDialog(
+          title: 'ALERT',
+          content: Text(responce['msg'] ?? 'Failed to add comment'),
+          onConfirm: () => Get.back(),
+        );
+        update();
+      }
+    } catch (e) {
+      showAlertDialog(e.toString());
+      update();
+    }
+  }
+
   @override
   void onClose() {
     pagingController.dispose();
@@ -274,6 +342,7 @@ class HomeScreenController extends GetxController {
       getPosts(page);
     });
     descriptionController = TextEditingController();
+    commentController = TextEditingController();
     statusRequest = StatusRequest.none;
   }
 }

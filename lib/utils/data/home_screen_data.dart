@@ -60,4 +60,12 @@ class HomeScreenData {
 
     return responce.fold((left) => left, (right) => right);
   }
+
+  Future makeComment(comment, friendId) async {
+    var responce = await crud.patchRequestHeaders(
+      '$posts/$friendId/comment',
+      {'comment': comment},
+    );
+    return responce.fold((left) => left, (right) => right);
+  }
 }
