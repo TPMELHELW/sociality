@@ -21,9 +21,9 @@ A modern social media mobile app built with **Flutter** and **GetX**, allowing u
 
 ## 📷 Screenshots
 
-| Home Feed | Create Post | Profile |
+| Home Feed | Create Post | post |
 |----------|-------------|---------|
-| ![feed](assets/images/auth.jpg) | ![post](assets/images/posts.jpg) | ![profile](assets/images/posts_1.jpg) |
+| ![feed](assets/images/auth.jpg) | ![post](assets/images/posts.jpg) | ![post](assets/images/posts_1.jpg) |
 
 
 ---
