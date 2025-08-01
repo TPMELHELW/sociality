@@ -1,16 +1,36 @@
-# sociality
+# 🌐 Sociality
 
-A new Flutter project.
+A modern social media mobile app built with **Flutter** and **GetX**, allowing users to share posts, interact with others, and explore trending content — all in a smooth, responsive interface.
 
-## Getting Started
+## 📱 Features
 
-This project is a starting point for a Flutter application.
+- User Authentication (Login / Signup)
+- Upload and View Posts
+- Like & Comment on Posts
+- Real-time Feed Updates
+- User Profiles
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter 💙
+- GetX for State Management ⚡
+- Rest Api
+- Responsive UI Design
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📷 Screenshots
+
+| Home Feed | Create Post | Profile |
+|----------|-------------|---------|
+| ![feed](assets/images/auth.jpg) | ![post](assets/images/posts.jpg) | ![profile](assets/images/posts_1.jpg) |
+
+
+---
+
+## 📥 Download APK
+
+Install the app on Android:  
+📱 **[Download APK](https://drive.google.com/file/d/1cMygwzEx_qCVsgnK8CqsfyUAQeoQ63Z-/view?usp=drive_link)**
+
+---
